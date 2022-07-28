@@ -1,0 +1,652 @@
+2022-07-20 08:42:02,202 - utils - INFO - Command Line Arguments:
+2022-07-20 08:42:02,202 - utils - INFO - data_base_dir = data/processedImage
+2022-07-20 08:42:02,203 - utils - INFO - data_path = data/train.lst
+2022-07-20 08:42:02,203 - utils - INFO - label_path = data/XMLsequence.lst
+2022-07-20 08:42:02,203 - utils - INFO - val_data_path = data/validate.lst
+2022-07-20 08:42:02,203 - utils - INFO - model_dir = checkpoints
+2022-07-20 08:42:02,203 - utils - INFO - log_path = log.txt
+2022-07-20 08:42:02,203 - utils - INFO - translate_log = translate_log.txt
+2022-07-20 08:42:02,203 - utils - INFO - output_dir = results
+2022-07-20 08:42:02,203 - utils - INFO - steps_per_checkpoint = 2000
+2022-07-20 08:42:02,204 - utils - INFO - beam_size = 5
+2022-07-20 08:42:02,204 - utils - INFO - valid_steps = 6000
+2022-07-20 08:42:02,204 - utils - INFO - num_epochs = 10
+2022-07-20 08:42:02,204 - utils - INFO - batch_size = 60
+2022-07-20 08:42:02,204 - utils - INFO - learning_rate = 0.1
+2022-07-20 08:42:02,204 - utils - INFO - learning_rate_min = 1e-05
+2022-07-20 08:42:02,204 - utils - INFO - lr_decay = 0.5
+2022-07-20 08:42:02,204 - utils - INFO - start_decay_at = 999
+2022-07-20 08:42:02,204 - utils - INFO - dropout = 0.2
+2022-07-20 08:42:02,204 - utils - INFO - target_embedding_size = 80
+2022-07-20 08:42:02,204 - utils - INFO - input_feed = True
+2022-07-20 08:42:02,204 - utils - INFO - encoder_num_hidden = 512
+2022-07-20 08:42:02,205 - utils - INFO - encoder_num_layers = 1
+2022-07-20 08:42:02,205 - utils - INFO - decoder_num_layers = 1
+2022-07-20 08:42:02,205 - utils - INFO - vocab_file = data/xml_vocab.txt
+2022-07-20 08:42:02,205 - utils - INFO - image_channel_size = 1
+2022-07-20 08:42:02,205 - utils - INFO - model_path = 
+2022-07-20 08:42:02,205 - utils - INFO - gpu_id = 0
+2022-07-20 08:42:02,205 - utils - INFO - resume_from = 
+2022-07-20 08:42:02,205 - utils - INFO - param_init = 0.05
+2022-07-20 08:42:02,205 - utils - INFO - seed = 910820
+2022-07-20 08:42:02,205 - utils - INFO - max_num_tokens = 100
+2022-07-20 08:42:02,205 - utils - INFO - End Command Line Arguments
+2022-07-20 08:42:02,212 - utils - INFO - Using CUDA on GPU 0
+2022-07-20 08:42:02,212 - utils - INFO - Data base dir data/processedImage
+2022-07-20 08:42:02,212 - utils - INFO - Loading vocab from data/xml_vocab.txt
+2022-07-20 08:42:02,213 - utils - INFO - Load training data from data/train.lst
+2022-07-20 08:42:03,957 - utils - INFO - Load validation data from data/validate.lst
+2022-07-20 08:42:05,411 - utils - INFO - Building model
+2022-07-20 08:42:05,411 - utils - INFO - Creating model with fresh parameters
+2022-07-20 08:42:10,905 - utils - INFO - UIModel(
+  (encoder): ImageEncoder(
+    (layer1): Conv2d(1, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (layer2): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (layer3): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (layer4): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (layer5): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (layer6): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (batch_norm1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (batch_norm2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (batch_norm3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (rnn): LSTM(512, 256, dropout=0.2, bidirectional=True)
+    (pos_lut): Embedding(1000, 512)
+  )
+  (decoder): RNNDecoder(
+    (dropout): Dropout(p=0.2, inplace=False)
+    (embeddings): Embedding(303, 80, padding_idx=1)
+    (rnn): StackedLSTM(
+      (dropout): Dropout(p=0.2, inplace=False)
+      (layers): ModuleList(
+        (0): LSTMCell(592, 512)
+      )
+    )
+    (attn): GlobalAttention(
+      (linear_in): Linear(in_features=512, out_features=512, bias=False)
+      (linear_out): Linear(in_features=1024, out_features=512, bias=False)
+    )
+  )
+  (generator): Sequential(
+    (0): Linear(in_features=512, out_features=303, bias=True)
+    (1): LogSoftmax(dim=-1)
+  )
+)
+2022-07-20 08:42:10,906 - utils - INFO - encoder: 6591232
+2022-07-20 08:42:10,906 - utils - INFO - decoder: 3075760
+2022-07-20 08:42:10,906 - utils - INFO - number of parameters: 9666992
+2022-07-20 08:42:10,906 - utils - INFO - Lr: 0.100000
+2022-07-20 08:42:47,545 - utils - INFO - Epoch: 0, Step: 50, Loss: 107.073814, lr: 0.100000, acc: 22.591399, ppl: 1.055502
+2022-07-20 08:43:24,069 - utils - INFO - Epoch: 0, Step: 100, Loss: 65.111099, lr: 0.100000, acc: 41.713533, ppl: 1.037410
+2022-07-20 08:44:00,611 - utils - INFO - Epoch: 0, Step: 150, Loss: 73.737595, lr: 0.100000, acc: 48.781228, ppl: 1.032152
+2022-07-20 08:44:36,897 - utils - INFO - Epoch: 0, Step: 200, Loss: 62.184574, lr: 0.100000, acc: 52.532803, ppl: 1.029055
+2022-07-20 08:45:13,279 - utils - INFO - Epoch: 0, Step: 250, Loss: 61.381748, lr: 0.100000, acc: 54.247795, ppl: 1.027676
+2022-07-20 08:45:49,956 - utils - INFO - Epoch: 0, Step: 300, Loss: 60.117649, lr: 0.100000, acc: 57.832403, ppl: 1.025476
+2022-07-20 08:46:26,282 - utils - INFO - Epoch: 0, Step: 350, Loss: 46.769451, lr: 0.100000, acc: 60.807569, ppl: 1.023611
+2022-07-20 08:47:02,848 - utils - INFO - Epoch: 0, Step: 400, Loss: 50.401966, lr: 0.100000, acc: 61.613873, ppl: 1.023141
+2022-07-20 08:47:39,302 - utils - INFO - Epoch: 0, Step: 450, Loss: 49.627247, lr: 0.100000, acc: 63.946678, ppl: 1.021655
+2022-07-20 08:48:15,741 - utils - INFO - Epoch: 0, Step: 500, Loss: 42.491032, lr: 0.100000, acc: 65.705101, ppl: 1.020573
+2022-07-20 08:48:52,268 - utils - INFO - Epoch: 0, Step: 550, Loss: 43.910805, lr: 0.100000, acc: 65.808904, ppl: 1.020411
+2022-07-20 08:49:28,700 - utils - INFO - Epoch: 0, Step: 600, Loss: 42.562843, lr: 0.100000, acc: 67.787758, ppl: 1.019207
+2022-07-20 08:50:05,316 - utils - INFO - Epoch: 0, Step: 650, Loss: 46.074383, lr: 0.100000, acc: 68.483958, ppl: 1.018754
+2022-07-20 08:50:41,713 - utils - INFO - Epoch: 0, Step: 700, Loss: 39.412006, lr: 0.100000, acc: 69.117016, ppl: 1.018335
+2022-07-20 08:51:18,259 - utils - INFO - Epoch: 0, Step: 750, Loss: 45.135777, lr: 0.100000, acc: 69.526841, ppl: 1.017972
+2022-07-20 08:51:54,732 - utils - INFO - Epoch: 0, Step: 800, Loss: 40.290237, lr: 0.100000, acc: 69.880533, ppl: 1.017580
+2022-07-20 08:52:31,300 - utils - INFO - Epoch: 0, Step: 850, Loss: 47.199791, lr: 0.100000, acc: 69.882331, ppl: 1.017646
+2022-07-20 08:53:07,825 - utils - INFO - Epoch: 0, Step: 900, Loss: 44.621788, lr: 0.100000, acc: 70.606680, ppl: 1.017228
+2022-07-20 08:53:44,366 - utils - INFO - Epoch: 0, Step: 950, Loss: 35.990448, lr: 0.100000, acc: 71.262473, ppl: 1.016823
+2022-07-20 08:54:20,774 - utils - INFO - Epoch: 0, Step: 1000, Loss: 36.711597, lr: 0.100000, acc: 71.210294, ppl: 1.016926
+2022-07-20 08:54:57,141 - utils - INFO - Epoch: 0, Step: 1050, Loss: 44.923370, lr: 0.100000, acc: 72.029173, ppl: 1.016334
+2022-07-20 08:55:33,395 - utils - INFO - Epoch: 0, Step: 1100, Loss: 36.389767, lr: 0.100000, acc: 71.785842, ppl: 1.016411
+2022-07-20 08:56:09,739 - utils - INFO - Epoch: 0, Step: 1150, Loss: 35.864456, lr: 0.100000, acc: 72.344217, ppl: 1.016147
+2022-07-20 08:56:46,311 - utils - INFO - Epoch: 0, Step: 1200, Loss: 38.310501, lr: 0.100000, acc: 72.657964, ppl: 1.015925
+2022-07-20 08:57:22,821 - utils - INFO - Epoch: 0, Step: 1250, Loss: 35.122238, lr: 0.100000, acc: 72.379379, ppl: 1.016011
+2022-07-20 08:57:59,323 - utils - INFO - Epoch: 0, Step: 1300, Loss: 35.107090, lr: 0.100000, acc: 73.186239, ppl: 1.015611
+2022-07-20 08:58:35,703 - utils - INFO - Epoch: 0, Step: 1350, Loss: 35.944092, lr: 0.100000, acc: 73.922767, ppl: 1.015098
+2022-07-20 08:59:12,220 - utils - INFO - Epoch: 0, Step: 1400, Loss: 36.016033, lr: 0.100000, acc: 73.481066, ppl: 1.015386
+2022-07-20 08:59:48,563 - utils - INFO - Epoch: 0, Step: 1450, Loss: 41.493347, lr: 0.100000, acc: 74.026300, ppl: 1.015137
+2022-07-20 09:00:25,101 - utils - INFO - Epoch: 0, Step: 1500, Loss: 31.901056, lr: 0.100000, acc: 73.842326, ppl: 1.015166
+2022-07-20 09:01:01,446 - utils - INFO - Epoch: 0, Step: 1550, Loss: 36.395081, lr: 0.100000, acc: 73.610767, ppl: 1.015400
+2022-07-20 09:01:37,818 - utils - INFO - Epoch: 0, Step: 1600, Loss: 36.017426, lr: 0.100000, acc: 74.586748, ppl: 1.014658
+2022-07-20 09:02:14,237 - utils - INFO - Epoch: 0, Step: 1650, Loss: 31.572166, lr: 0.100000, acc: 75.151297, ppl: 1.014348
+2022-07-20 09:02:50,675 - utils - INFO - Epoch: 0, Step: 1700, Loss: 31.867470, lr: 0.100000, acc: 75.308850, ppl: 1.014225
+2022-07-20 09:03:27,023 - utils - INFO - Epoch: 0, Step: 1750, Loss: 32.040356, lr: 0.100000, acc: 75.734444, ppl: 1.013992
+2022-07-20 09:04:03,619 - utils - INFO - Epoch: 0, Step: 1800, Loss: 33.054066, lr: 0.100000, acc: 75.552774, ppl: 1.014085
+2022-07-20 09:04:40,172 - utils - INFO - Epoch: 0, Step: 1850, Loss: 34.854347, lr: 0.100000, acc: 75.388894, ppl: 1.014105
+2022-07-20 09:05:16,515 - utils - INFO - Epoch: 0, Step: 1900, Loss: 31.072334, lr: 0.100000, acc: 75.614122, ppl: 1.014049
+2022-07-20 09:05:53,108 - utils - INFO - Epoch: 0, Step: 1950, Loss: 28.398693, lr: 0.100000, acc: 76.119765, ppl: 1.013786
+2022-07-20 09:06:29,336 - utils - INFO - Epoch: 0, Step: 2000, Loss: 37.315472, lr: 0.100000, acc: 76.235573, ppl: 1.013755
+2022-07-20 09:06:29,447 - utils - INFO - Saving model at checkpoints/UIModel__step_2000.pth
+2022-07-20 09:07:05,668 - utils - INFO - Epoch: 0, Step: 2050, Loss: 32.914070, lr: 0.100000, acc: 76.436311, ppl: 1.013604
+2022-07-20 09:07:42,110 - utils - INFO - Epoch: 0, Step: 2100, Loss: 25.918478, lr: 0.100000, acc: 76.649450, ppl: 1.013400
+2022-07-20 09:08:18,647 - utils - INFO - Epoch: 0, Step: 2150, Loss: 29.876015, lr: 0.100000, acc: 76.640856, ppl: 1.013476
+2022-07-20 09:08:54,947 - utils - INFO - Epoch: 0, Step: 2200, Loss: 28.364790, lr: 0.100000, acc: 76.798900, ppl: 1.013254
+2022-07-20 09:09:31,233 - utils - INFO - Epoch: 0, Step: 2250, Loss: 35.977016, lr: 0.100000, acc: 76.939473, ppl: 1.013135
+2022-07-20 09:10:07,631 - utils - INFO - Epoch: 0, Step: 2300, Loss: 33.398125, lr: 0.100000, acc: 77.685300, ppl: 1.012679
+2022-07-20 09:10:44,013 - utils - INFO - Epoch: 0, Step: 2350, Loss: 31.418898, lr: 0.100000, acc: 76.606518, ppl: 1.013258
+2022-07-20 09:11:20,435 - utils - INFO - Epoch: 0, Step: 2400, Loss: 26.406443, lr: 0.100000, acc: 76.839643, ppl: 1.013095
+2022-07-20 09:11:56,960 - utils - INFO - Epoch: 0, Step: 2450, Loss: 28.071407, lr: 0.100000, acc: 77.650297, ppl: 1.012762
+2022-07-20 09:12:33,321 - utils - INFO - Epoch: 0, Step: 2500, Loss: 27.262148, lr: 0.100000, acc: 77.323127, ppl: 1.013003
+2022-07-20 09:13:09,573 - utils - INFO - Epoch: 0, Step: 2550, Loss: 29.913502, lr: 0.100000, acc: 76.986762, ppl: 1.013146
+2022-07-20 09:13:46,041 - utils - INFO - Epoch: 0, Step: 2600, Loss: 25.545404, lr: 0.100000, acc: 77.836180, ppl: 1.012622
+2022-07-20 09:14:22,240 - utils - INFO - Epoch: 0, Step: 2650, Loss: 29.664248, lr: 0.100000, acc: 77.987049, ppl: 1.012499
+2022-07-20 09:14:58,696 - utils - INFO - Epoch: 0, Step: 2700, Loss: 30.398041, lr: 0.100000, acc: 77.894411, ppl: 1.012557
+2022-07-20 09:15:35,126 - utils - INFO - Epoch: 0, Step: 2750, Loss: 32.017284, lr: 0.100000, acc: 78.205128, ppl: 1.012375
+2022-07-20 09:16:11,838 - utils - INFO - Epoch: 1, Step: 2800, Loss: 29.693171, lr: 0.100000, acc: 78.214736, ppl: 1.012357
+2022-07-20 09:16:51,702 - utils - INFO - Epoch: 1, Step: 2850, Loss: 27.296976, lr: 0.100000, acc: 78.570718, ppl: 1.012250
+2022-07-20 09:17:37,634 - utils - INFO - Epoch: 1, Step: 2900, Loss: 27.130800, lr: 0.100000, acc: 78.874315, ppl: 1.011983
+2022-07-20 09:18:13,947 - utils - INFO - Epoch: 1, Step: 2950, Loss: 29.502779, lr: 0.100000, acc: 78.610189, ppl: 1.012101
+2022-07-20 09:18:50,622 - utils - INFO - Epoch: 1, Step: 3000, Loss: 27.088326, lr: 0.100000, acc: 78.584007, ppl: 1.012126
+2022-07-20 09:19:26,980 - utils - INFO - Epoch: 1, Step: 3050, Loss: 32.169994, lr: 0.100000, acc: 78.524488, ppl: 1.012143
+2022-07-20 09:20:03,364 - utils - INFO - Epoch: 1, Step: 3100, Loss: 25.987509, lr: 0.100000, acc: 78.574205, ppl: 1.012149
+2022-07-20 09:20:41,058 - utils - INFO - Epoch: 1, Step: 3150, Loss: 31.828814, lr: 0.100000, acc: 78.832240, ppl: 1.011928
+2022-07-20 09:21:17,585 - utils - INFO - Epoch: 1, Step: 3200, Loss: 25.574268, lr: 0.100000, acc: 79.331588, ppl: 1.011661
+2022-07-20 09:21:53,940 - utils - INFO - Epoch: 1, Step: 3250, Loss: 27.288963, lr: 0.100000, acc: 79.510518, ppl: 1.011529
+2022-07-20 09:22:30,454 - utils - INFO - Epoch: 1, Step: 3300, Loss: 28.349020, lr: 0.100000, acc: 79.455227, ppl: 1.011517
+2022-07-20 09:23:06,640 - utils - INFO - Epoch: 1, Step: 3350, Loss: 29.971634, lr: 0.100000, acc: 79.412065, ppl: 1.011584
+2022-07-20 09:23:43,045 - utils - INFO - Epoch: 1, Step: 3400, Loss: 24.303528, lr: 0.100000, acc: 79.771195, ppl: 1.011444
+2022-07-20 09:24:19,320 - utils - INFO - Epoch: 1, Step: 3450, Loss: 32.249866, lr: 0.100000, acc: 79.735090, ppl: 1.011373
+2022-07-20 09:24:55,591 - utils - INFO - Epoch: 1, Step: 3500, Loss: 28.320913, lr: 0.100000, acc: 79.606000, ppl: 1.011413
+2022-07-20 09:25:31,968 - utils - INFO - Epoch: 1, Step: 3550, Loss: 27.618580, lr: 0.100000, acc: 80.239104, ppl: 1.011113
+2022-07-20 09:26:08,201 - utils - INFO - Epoch: 1, Step: 3600, Loss: 28.794067, lr: 0.100000, acc: 79.826543, ppl: 1.011249
+2022-07-20 09:26:44,468 - utils - INFO - Epoch: 1, Step: 3650, Loss: 27.071430, lr: 0.100000, acc: 80.453279, ppl: 1.011025
+2022-07-20 09:27:20,745 - utils - INFO - Epoch: 1, Step: 3700, Loss: 26.989977, lr: 0.100000, acc: 80.200817, ppl: 1.011193
+2022-07-20 09:27:57,330 - utils - INFO - Epoch: 1, Step: 3750, Loss: 30.869368, lr: 0.100000, acc: 80.362664, ppl: 1.011044
+2022-07-20 09:28:33,588 - utils - INFO - Epoch: 1, Step: 3800, Loss: 25.386061, lr: 0.100000, acc: 80.476462, ppl: 1.010973
+2022-07-20 09:29:10,018 - utils - INFO - Epoch: 1, Step: 3850, Loss: 26.677189, lr: 0.100000, acc: 80.601517, ppl: 1.010857
+2022-07-20 09:29:46,168 - utils - INFO - Epoch: 1, Step: 3900, Loss: 25.506166, lr: 0.100000, acc: 80.588953, ppl: 1.010870
+2022-07-20 09:30:22,530 - utils - INFO - Epoch: 1, Step: 3950, Loss: 20.998566, lr: 0.100000, acc: 80.971260, ppl: 1.010677
+2022-07-20 09:30:58,917 - utils - INFO - Epoch: 1, Step: 4000, Loss: 21.505363, lr: 0.100000, acc: 81.037429, ppl: 1.010732
+2022-07-20 09:30:59,068 - utils - INFO - Saving model at checkpoints/UIModel__step_4000.pth
+2022-07-20 09:31:35,405 - utils - INFO - Epoch: 1, Step: 4050, Loss: 23.126869, lr: 0.100000, acc: 81.126212, ppl: 1.010579
+2022-07-20 09:32:11,869 - utils - INFO - Epoch: 1, Step: 4100, Loss: 24.124655, lr: 0.100000, acc: 80.917331, ppl: 1.010759
+2022-07-20 09:32:48,147 - utils - INFO - Epoch: 1, Step: 4150, Loss: 26.115665, lr: 0.100000, acc: 81.707745, ppl: 1.010280
+2022-07-20 09:33:24,522 - utils - INFO - Epoch: 1, Step: 4200, Loss: 24.938791, lr: 0.100000, acc: 82.006288, ppl: 1.010142
+2022-07-20 09:34:00,848 - utils - INFO - Epoch: 1, Step: 4250, Loss: 23.049520, lr: 0.100000, acc: 81.747796, ppl: 1.010236
+2022-07-20 09:34:37,187 - utils - INFO - Epoch: 1, Step: 4300, Loss: 21.513660, lr: 0.100000, acc: 81.345289, ppl: 1.010505
+2022-07-20 09:35:13,500 - utils - INFO - Epoch: 1, Step: 4350, Loss: 24.679739, lr: 0.100000, acc: 81.875347, ppl: 1.010211
+2022-07-20 09:35:49,858 - utils - INFO - Epoch: 1, Step: 4400, Loss: 23.951279, lr: 0.100000, acc: 81.719653, ppl: 1.010272
+2022-07-20 09:36:26,058 - utils - INFO - Epoch: 1, Step: 4450, Loss: 26.613304, lr: 0.100000, acc: 82.003897, ppl: 1.010136
+2022-07-20 09:37:02,211 - utils - INFO - Epoch: 1, Step: 4500, Loss: 21.173386, lr: 0.100000, acc: 81.940861, ppl: 1.010191
+2022-07-20 09:37:38,509 - utils - INFO - Epoch: 1, Step: 4550, Loss: 22.270599, lr: 0.100000, acc: 82.403154, ppl: 1.009901
+2022-07-20 09:38:14,832 - utils - INFO - Epoch: 1, Step: 4600, Loss: 23.130291, lr: 0.100000, acc: 81.776378, ppl: 1.010248
+2022-07-20 09:38:51,274 - utils - INFO - Epoch: 1, Step: 4650, Loss: 23.461565, lr: 0.100000, acc: 81.825213, ppl: 1.010239
+2022-07-20 09:39:27,396 - utils - INFO - Epoch: 1, Step: 4700, Loss: 20.764744, lr: 0.100000, acc: 82.187885, ppl: 1.010035
+2022-07-20 09:40:03,492 - utils - INFO - Epoch: 1, Step: 4750, Loss: 22.086458, lr: 0.100000, acc: 82.005932, ppl: 1.010131
+2022-07-20 09:40:39,711 - utils - INFO - Epoch: 1, Step: 4800, Loss: 19.924065, lr: 0.100000, acc: 82.482826, ppl: 1.009835
+2022-07-20 09:41:16,335 - utils - INFO - Epoch: 1, Step: 4850, Loss: 22.477512, lr: 0.100000, acc: 82.547080, ppl: 1.009821
+2022-07-20 09:41:52,474 - utils - INFO - Epoch: 1, Step: 4900, Loss: 19.692129, lr: 0.100000, acc: 82.594320, ppl: 1.009816
+2022-07-20 09:42:28,719 - utils - INFO - Epoch: 1, Step: 4950, Loss: 20.175350, lr: 0.100000, acc: 82.698151, ppl: 1.009697
+2022-07-20 09:43:04,917 - utils - INFO - Epoch: 1, Step: 5000, Loss: 27.407944, lr: 0.100000, acc: 82.703974, ppl: 1.009716
+2022-07-20 09:43:41,202 - utils - INFO - Epoch: 1, Step: 5050, Loss: 19.556767, lr: 0.100000, acc: 83.071797, ppl: 1.009510
+2022-07-20 09:44:17,591 - utils - INFO - Epoch: 1, Step: 5100, Loss: 21.008411, lr: 0.100000, acc: 82.895464, ppl: 1.009615
+2022-07-20 09:44:53,966 - utils - INFO - Epoch: 1, Step: 5150, Loss: 26.546244, lr: 0.100000, acc: 83.375138, ppl: 1.009406
+2022-07-20 09:45:30,409 - utils - INFO - Epoch: 1, Step: 5200, Loss: 22.699772, lr: 0.100000, acc: 83.216026, ppl: 1.009417
+2022-07-20 09:46:06,528 - utils - INFO - Epoch: 1, Step: 5250, Loss: 18.903301, lr: 0.100000, acc: 82.811271, ppl: 1.009710
+2022-07-20 09:46:42,724 - utils - INFO - Epoch: 1, Step: 5300, Loss: 20.815025, lr: 0.100000, acc: 83.828642, ppl: 1.009181
+2022-07-20 09:47:19,007 - utils - INFO - Epoch: 1, Step: 5350, Loss: 24.505817, lr: 0.100000, acc: 83.489916, ppl: 1.009266
+2022-07-20 09:47:55,302 - utils - INFO - Epoch: 1, Step: 5400, Loss: 20.529062, lr: 0.100000, acc: 83.604561, ppl: 1.009183
+2022-07-20 09:48:31,422 - utils - INFO - Epoch: 1, Step: 5450, Loss: 24.301384, lr: 0.100000, acc: 83.654336, ppl: 1.009228
+2022-07-20 09:49:07,791 - utils - INFO - Epoch: 1, Step: 5500, Loss: 21.656721, lr: 0.100000, acc: 84.196676, ppl: 1.008889
+2022-07-20 09:49:44,556 - utils - INFO - Epoch: 2, Step: 5550, Loss: 22.345371, lr: 0.100000, acc: 84.130269, ppl: 1.008952
+2022-07-20 09:50:20,790 - utils - INFO - Epoch: 2, Step: 5600, Loss: 18.205368, lr: 0.100000, acc: 84.215571, ppl: 1.008848
+2022-07-20 09:50:56,973 - utils - INFO - Epoch: 2, Step: 5650, Loss: 16.445189, lr: 0.100000, acc: 84.251036, ppl: 1.008905
+2022-07-20 09:51:33,096 - utils - INFO - Epoch: 2, Step: 5700, Loss: 18.034252, lr: 0.100000, acc: 84.439006, ppl: 1.008788
+2022-07-20 09:52:09,476 - utils - INFO - Epoch: 2, Step: 5750, Loss: 19.451042, lr: 0.100000, acc: 83.823252, ppl: 1.009096
+2022-07-20 09:52:45,510 - utils - INFO - Epoch: 2, Step: 5800, Loss: 19.821768, lr: 0.100000, acc: 84.456233, ppl: 1.008740
+2022-07-20 09:53:21,629 - utils - INFO - Epoch: 2, Step: 5850, Loss: 22.838127, lr: 0.100000, acc: 84.429767, ppl: 1.008775
+2022-07-20 09:53:57,904 - utils - INFO - Epoch: 2, Step: 5900, Loss: 24.648777, lr: 0.100000, acc: 84.396284, ppl: 1.008833
+2022-07-20 09:54:34,154 - utils - INFO - Epoch: 2, Step: 5950, Loss: 20.498552, lr: 0.100000, acc: 84.945239, ppl: 1.008476
+2022-07-20 09:55:09,870 - utils - INFO - Evaluating model
+2022-07-20 09:55:29,240 - utils - INFO - Epoch: 2 Step 6000 - Val Ppl = 1.011998 - Accuracy = 79.937932
+2022-07-20 09:55:29,445 - utils - INFO - Epoch: 2, Step: 6000, Loss: 18.995167, lr: 0.100000, acc: 85.189467, ppl: 1.008308
+2022-07-20 09:55:29,713 - utils - INFO - Saving model at checkpoints/UIModel__step_6000.pth
+2022-07-20 09:56:06,244 - utils - INFO - Epoch: 2, Step: 6050, Loss: 18.468098, lr: 0.100000, acc: 84.855292, ppl: 1.008547
+2022-07-20 09:56:42,446 - utils - INFO - Epoch: 2, Step: 6100, Loss: 20.254629, lr: 0.100000, acc: 84.749655, ppl: 1.008582
+2022-07-20 09:57:18,906 - utils - INFO - Epoch: 2, Step: 6150, Loss: 16.588785, lr: 0.100000, acc: 84.752136, ppl: 1.008585
+2022-07-20 09:57:55,296 - utils - INFO - Epoch: 2, Step: 6200, Loss: 21.056999, lr: 0.100000, acc: 85.302302, ppl: 1.008327
+2022-07-20 09:58:31,484 - utils - INFO - Epoch: 2, Step: 6250, Loss: 19.178320, lr: 0.100000, acc: 85.036432, ppl: 1.008504
+2022-07-20 09:59:07,857 - utils - INFO - Epoch: 2, Step: 6300, Loss: 22.264513, lr: 0.100000, acc: 85.024934, ppl: 1.008392
+2022-07-20 09:59:44,172 - utils - INFO - Epoch: 2, Step: 6350, Loss: 20.400396, lr: 0.100000, acc: 85.115553, ppl: 1.008374
+2022-07-20 10:00:20,479 - utils - INFO - Epoch: 2, Step: 6400, Loss: 22.040733, lr: 0.100000, acc: 85.111976, ppl: 1.008310
+2022-07-20 10:00:56,705 - utils - INFO - Epoch: 2, Step: 6450, Loss: 17.466772, lr: 0.100000, acc: 84.900104, ppl: 1.008502
+2022-07-20 10:01:32,933 - utils - INFO - Epoch: 2, Step: 6500, Loss: 17.395105, lr: 0.100000, acc: 85.137096, ppl: 1.008459
+2022-07-20 10:02:09,231 - utils - INFO - Epoch: 2, Step: 6550, Loss: 19.556650, lr: 0.100000, acc: 85.207362, ppl: 1.008355
+2022-07-20 10:02:45,721 - utils - INFO - Epoch: 2, Step: 6600, Loss: 18.341457, lr: 0.100000, acc: 85.231559, ppl: 1.008222
+2022-07-20 10:03:21,987 - utils - INFO - Epoch: 2, Step: 6650, Loss: 16.535599, lr: 0.100000, acc: 85.752044, ppl: 1.008072
+2022-07-20 10:03:58,397 - utils - INFO - Epoch: 2, Step: 6700, Loss: 15.948374, lr: 0.100000, acc: 85.771765, ppl: 1.008105
+2022-07-20 10:04:34,636 - utils - INFO - Epoch: 2, Step: 6750, Loss: 19.502752, lr: 0.100000, acc: 85.653003, ppl: 1.008106
+2022-07-20 10:05:10,838 - utils - INFO - Epoch: 2, Step: 6800, Loss: 16.665459, lr: 0.100000, acc: 86.106802, ppl: 1.007841
+2022-07-20 10:05:47,111 - utils - INFO - Epoch: 2, Step: 6850, Loss: 18.606039, lr: 0.100000, acc: 86.146632, ppl: 1.007839
+2022-07-20 10:06:35,918 - utils - INFO - Epoch: 2, Step: 6900, Loss: 15.674966, lr: 0.100000, acc: 85.764687, ppl: 1.007989
+2022-07-20 10:07:19,343 - utils - INFO - Epoch: 2, Step: 6950, Loss: 18.564445, lr: 0.100000, acc: 85.750936, ppl: 1.008024
+2022-07-20 10:07:55,682 - utils - INFO - Epoch: 2, Step: 7000, Loss: 17.656275, lr: 0.100000, acc: 86.057398, ppl: 1.007861
+2022-07-20 10:08:31,841 - utils - INFO - Epoch: 2, Step: 7050, Loss: 20.544407, lr: 0.100000, acc: 85.837348, ppl: 1.008077
+2022-07-20 10:09:08,082 - utils - INFO - Epoch: 2, Step: 7100, Loss: 18.756655, lr: 0.100000, acc: 86.138416, ppl: 1.007761
+2022-07-20 10:09:44,467 - utils - INFO - Epoch: 2, Step: 7150, Loss: 19.497900, lr: 0.100000, acc: 86.047545, ppl: 1.007799
+2022-07-20 10:10:20,613 - utils - INFO - Epoch: 2, Step: 7200, Loss: 18.955208, lr: 0.100000, acc: 86.294081, ppl: 1.007807
+2022-07-20 10:10:57,216 - utils - INFO - Epoch: 2, Step: 7250, Loss: 18.801342, lr: 0.100000, acc: 86.037185, ppl: 1.007868
+2022-07-20 10:11:33,477 - utils - INFO - Epoch: 2, Step: 7300, Loss: 16.375006, lr: 0.100000, acc: 86.779529, ppl: 1.007415
+2022-07-20 10:12:09,687 - utils - INFO - Epoch: 2, Step: 7350, Loss: 14.821666, lr: 0.100000, acc: 86.772284, ppl: 1.007421
+2022-07-20 10:12:45,930 - utils - INFO - Epoch: 2, Step: 7400, Loss: 17.941872, lr: 0.100000, acc: 86.122263, ppl: 1.007818
+2022-07-20 10:13:22,369 - utils - INFO - Epoch: 2, Step: 7450, Loss: 18.634111, lr: 0.100000, acc: 86.572408, ppl: 1.007590
+2022-07-20 10:13:58,554 - utils - INFO - Epoch: 2, Step: 7500, Loss: 19.161842, lr: 0.100000, acc: 86.698275, ppl: 1.007468
+2022-07-20 10:14:34,837 - utils - INFO - Epoch: 2, Step: 7550, Loss: 14.472060, lr: 0.100000, acc: 86.693603, ppl: 1.007515
+2022-07-20 10:15:10,935 - utils - INFO - Epoch: 2, Step: 7600, Loss: 18.645159, lr: 0.100000, acc: 86.645059, ppl: 1.007566
+2022-07-20 10:15:47,106 - utils - INFO - Epoch: 2, Step: 7650, Loss: 14.806147, lr: 0.100000, acc: 86.822948, ppl: 1.007450
+2022-07-20 10:16:23,457 - utils - INFO - Epoch: 2, Step: 7700, Loss: 20.094252, lr: 0.100000, acc: 86.400242, ppl: 1.007609
+2022-07-20 10:16:59,833 - utils - INFO - Epoch: 2, Step: 7750, Loss: 18.232885, lr: 0.100000, acc: 86.777642, ppl: 1.007461
+2022-07-20 10:17:36,252 - utils - INFO - Epoch: 2, Step: 7800, Loss: 18.435179, lr: 0.100000, acc: 86.832257, ppl: 1.007390
+2022-07-20 10:18:12,392 - utils - INFO - Epoch: 2, Step: 7850, Loss: 19.247490, lr: 0.100000, acc: 86.976593, ppl: 1.007351
+2022-07-20 10:18:48,480 - utils - INFO - Epoch: 2, Step: 7900, Loss: 19.898352, lr: 0.100000, acc: 86.982089, ppl: 1.007330
+2022-07-20 10:19:24,653 - utils - INFO - Epoch: 2, Step: 7950, Loss: 18.659107, lr: 0.100000, acc: 87.101888, ppl: 1.007268
+2022-07-20 10:20:22,209 - utils - INFO - Epoch: 2, Step: 8000, Loss: 16.839722, lr: 0.100000, acc: 87.087942, ppl: 1.007252
+2022-07-20 10:20:22,312 - utils - INFO - Saving model at checkpoints/UIModel__step_8000.pth
+2022-07-20 10:20:58,531 - utils - INFO - Epoch: 2, Step: 8050, Loss: 16.283165, lr: 0.100000, acc: 86.960596, ppl: 1.007381
+2022-07-20 10:21:34,690 - utils - INFO - Epoch: 2, Step: 8100, Loss: 15.656265, lr: 0.100000, acc: 87.196898, ppl: 1.007235
+2022-07-20 10:22:11,210 - utils - INFO - Epoch: 2, Step: 8150, Loss: 14.297199, lr: 0.100000, acc: 86.779526, ppl: 1.007454
+2022-07-20 10:22:47,253 - utils - INFO - Epoch: 2, Step: 8200, Loss: 17.897583, lr: 0.100000, acc: 87.353310, ppl: 1.007036
+2022-07-20 10:23:23,656 - utils - INFO - Epoch: 2, Step: 8250, Loss: 17.164762, lr: 0.100000, acc: 87.296301, ppl: 1.007112
+2022-07-20 10:24:00,493 - utils - INFO - Epoch: 3, Step: 8300, Loss: 18.853262, lr: 0.100000, acc: 87.595950, ppl: 1.006984
+2022-07-20 10:24:36,663 - utils - INFO - Epoch: 3, Step: 8350, Loss: 17.932472, lr: 0.100000, acc: 87.591022, ppl: 1.006922
+2022-07-20 10:25:12,986 - utils - INFO - Epoch: 3, Step: 8400, Loss: 12.094750, lr: 0.100000, acc: 87.444676, ppl: 1.007013
+2022-07-20 10:25:49,374 - utils - INFO - Epoch: 3, Step: 8450, Loss: 17.264387, lr: 0.100000, acc: 87.680313, ppl: 1.006889
+2022-07-20 10:26:25,531 - utils - INFO - Epoch: 3, Step: 8500, Loss: 17.137611, lr: 0.100000, acc: 87.437811, ppl: 1.007070
+2022-07-20 10:27:01,642 - utils - INFO - Epoch: 3, Step: 8550, Loss: 15.485969, lr: 0.100000, acc: 87.517148, ppl: 1.006993
+2022-07-20 10:27:37,688 - utils - INFO - Epoch: 3, Step: 8600, Loss: 18.859678, lr: 0.100000, acc: 87.661326, ppl: 1.006914
+2022-07-20 10:28:13,958 - utils - INFO - Epoch: 3, Step: 8650, Loss: 18.837378, lr: 0.100000, acc: 87.362086, ppl: 1.007144
+2022-07-20 10:28:50,441 - utils - INFO - Epoch: 3, Step: 8700, Loss: 15.778103, lr: 0.100000, acc: 87.500622, ppl: 1.007001
+2022-07-20 10:29:26,773 - utils - INFO - Epoch: 3, Step: 8750, Loss: 14.818525, lr: 0.100000, acc: 87.433262, ppl: 1.007065
+2022-07-20 10:30:03,231 - utils - INFO - Epoch: 3, Step: 8800, Loss: 18.824234, lr: 0.100000, acc: 87.412688, ppl: 1.007085
+2022-07-20 10:30:39,369 - utils - INFO - Epoch: 3, Step: 8850, Loss: 14.488874, lr: 0.100000, acc: 88.127835, ppl: 1.006618
+2022-07-20 10:31:15,692 - utils - INFO - Epoch: 3, Step: 8900, Loss: 13.286451, lr: 0.100000, acc: 87.753347, ppl: 1.006887
+2022-07-20 10:31:52,077 - utils - INFO - Epoch: 3, Step: 8950, Loss: 13.924229, lr: 0.100000, acc: 88.153245, ppl: 1.006625
+2022-07-20 10:32:28,397 - utils - INFO - Epoch: 3, Step: 9000, Loss: 18.400911, lr: 0.100000, acc: 88.187934, ppl: 1.006646
+2022-07-20 10:33:04,742 - utils - INFO - Epoch: 3, Step: 9050, Loss: 14.072036, lr: 0.100000, acc: 88.010598, ppl: 1.006776
+2022-07-20 10:33:40,835 - utils - INFO - Epoch: 3, Step: 9100, Loss: 16.250257, lr: 0.100000, acc: 88.349944, ppl: 1.006536
+2022-07-20 10:34:17,139 - utils - INFO - Epoch: 3, Step: 9150, Loss: 14.992709, lr: 0.100000, acc: 88.159383, ppl: 1.006657
+2022-07-20 10:34:53,424 - utils - INFO - Epoch: 3, Step: 9200, Loss: 17.430243, lr: 0.100000, acc: 88.051396, ppl: 1.006729
+2022-07-20 10:35:29,714 - utils - INFO - Epoch: 3, Step: 9250, Loss: 17.976471, lr: 0.100000, acc: 87.939228, ppl: 1.006778
+2022-07-20 10:36:05,954 - utils - INFO - Epoch: 3, Step: 9300, Loss: 13.505334, lr: 0.100000, acc: 88.559862, ppl: 1.006432
+2022-07-20 10:36:42,216 - utils - INFO - Epoch: 3, Step: 9350, Loss: 16.643326, lr: 0.100000, acc: 88.387844, ppl: 1.006500
+2022-07-20 10:37:18,410 - utils - INFO - Epoch: 3, Step: 9400, Loss: 16.987999, lr: 0.100000, acc: 88.325449, ppl: 1.006600
+2022-07-20 10:37:54,771 - utils - INFO - Epoch: 3, Step: 9450, Loss: 15.960828, lr: 0.100000, acc: 88.205289, ppl: 1.006605
+2022-07-20 10:38:31,137 - utils - INFO - Epoch: 3, Step: 9500, Loss: 18.788898, lr: 0.100000, acc: 88.080339, ppl: 1.006718
+2022-07-20 10:39:07,315 - utils - INFO - Epoch: 3, Step: 9550, Loss: 18.467657, lr: 0.100000, acc: 88.206942, ppl: 1.006596
+2022-07-20 10:39:43,671 - utils - INFO - Epoch: 3, Step: 9600, Loss: 16.141356, lr: 0.100000, acc: 88.162738, ppl: 1.006593
+2022-07-20 10:40:19,918 - utils - INFO - Epoch: 3, Step: 9650, Loss: 15.261512, lr: 0.100000, acc: 88.539228, ppl: 1.006447
+2022-07-20 10:40:56,124 - utils - INFO - Epoch: 3, Step: 9700, Loss: 13.974651, lr: 0.100000, acc: 88.855670, ppl: 1.006245
+2022-07-20 10:41:32,159 - utils - INFO - Epoch: 3, Step: 9750, Loss: 16.330923, lr: 0.100000, acc: 88.533830, ppl: 1.006474
+2022-07-20 10:42:08,438 - utils - INFO - Epoch: 3, Step: 9800, Loss: 14.023871, lr: 0.100000, acc: 88.715615, ppl: 1.006373
+2022-07-20 10:42:44,609 - utils - INFO - Epoch: 3, Step: 9850, Loss: 17.117989, lr: 0.100000, acc: 88.490239, ppl: 1.006495
+2022-07-20 10:43:20,823 - utils - INFO - Epoch: 3, Step: 9900, Loss: 14.663197, lr: 0.100000, acc: 88.286426, ppl: 1.006641
+2022-07-20 10:43:57,116 - utils - INFO - Epoch: 3, Step: 9950, Loss: 15.876550, lr: 0.100000, acc: 88.528321, ppl: 1.006532
+2022-07-20 10:44:33,315 - utils - INFO - Epoch: 3, Step: 10000, Loss: 13.556252, lr: 0.100000, acc: 88.667225, ppl: 1.006359
+2022-07-20 10:44:33,429 - utils - INFO - Saving model at checkpoints/UIModel__step_10000.pth
+2022-07-20 10:45:09,761 - utils - INFO - Epoch: 3, Step: 10050, Loss: 16.878126, lr: 0.100000, acc: 88.483035, ppl: 1.006367
+2022-07-20 10:45:45,800 - utils - INFO - Epoch: 3, Step: 10100, Loss: 14.074426, lr: 0.100000, acc: 88.550142, ppl: 1.006430
+2022-07-20 10:46:21,822 - utils - INFO - Epoch: 3, Step: 10150, Loss: 18.086792, lr: 0.100000, acc: 88.537457, ppl: 1.006477
+2022-07-20 10:46:58,162 - utils - INFO - Epoch: 3, Step: 10200, Loss: 13.828933, lr: 0.100000, acc: 88.736546, ppl: 1.006306
+2022-07-20 10:47:34,602 - utils - INFO - Epoch: 3, Step: 10250, Loss: 16.707159, lr: 0.100000, acc: 88.847584, ppl: 1.006323
+2022-07-20 10:48:10,909 - utils - INFO - Epoch: 3, Step: 10300, Loss: 13.573477, lr: 0.100000, acc: 88.763823, ppl: 1.006386
+2022-07-20 10:48:47,034 - utils - INFO - Epoch: 3, Step: 10350, Loss: 12.330565, lr: 0.100000, acc: 88.658306, ppl: 1.006381
+2022-07-20 10:49:23,206 - utils - INFO - Epoch: 3, Step: 10400, Loss: 18.318304, lr: 0.100000, acc: 88.840446, ppl: 1.006246
+2022-07-20 10:49:59,392 - utils - INFO - Epoch: 3, Step: 10450, Loss: 14.227977, lr: 0.100000, acc: 88.983129, ppl: 1.006160
+2022-07-20 10:50:35,686 - utils - INFO - Epoch: 3, Step: 10500, Loss: 15.402417, lr: 0.100000, acc: 88.910314, ppl: 1.006189
+2022-07-20 10:51:11,876 - utils - INFO - Epoch: 3, Step: 10550, Loss: 18.647787, lr: 0.100000, acc: 88.907436, ppl: 1.006221
+2022-07-20 10:51:48,160 - utils - INFO - Epoch: 3, Step: 10600, Loss: 14.105308, lr: 0.100000, acc: 88.543927, ppl: 1.006393
+2022-07-20 10:52:23,919 - utils - INFO - Epoch: 3, Step: 10650, Loss: 15.505375, lr: 0.100000, acc: 88.993110, ppl: 1.006209
+2022-07-20 10:52:59,320 - utils - INFO - Epoch: 3, Step: 10700, Loss: 13.107486, lr: 0.100000, acc: 88.954666, ppl: 1.006152
+2022-07-20 10:53:34,745 - utils - INFO - Epoch: 3, Step: 10750, Loss: 14.699081, lr: 0.100000, acc: 88.828461, ppl: 1.006307
+2022-07-20 10:54:10,270 - utils - INFO - Epoch: 3, Step: 10800, Loss: 14.118525, lr: 0.100000, acc: 89.011681, ppl: 1.006141
+2022-07-20 10:54:45,528 - utils - INFO - Epoch: 3, Step: 10850, Loss: 15.963949, lr: 0.100000, acc: 89.038266, ppl: 1.006154
+2022-07-20 10:55:21,245 - utils - INFO - Epoch: 3, Step: 10900, Loss: 13.411662, lr: 0.100000, acc: 89.023788, ppl: 1.006144
+2022-07-20 10:55:56,520 - utils - INFO - Epoch: 3, Step: 10950, Loss: 14.622038, lr: 0.100000, acc: 89.806183, ppl: 1.005757
+2022-07-20 10:56:31,721 - utils - INFO - Epoch: 3, Step: 11000, Loss: 12.336971, lr: 0.100000, acc: 89.154678, ppl: 1.006088
+2022-07-20 10:57:07,612 - utils - INFO - Epoch: 3, Step: 11050, Loss: 17.346447, lr: 0.100000, acc: 89.139974, ppl: 1.006130
+2022-07-20 10:57:43,347 - utils - INFO - Epoch: 4, Step: 11100, Loss: 12.645553, lr: 0.100000, acc: 89.624001, ppl: 1.005771
+2022-07-20 10:58:18,917 - utils - INFO - Epoch: 4, Step: 11150, Loss: 12.492234, lr: 0.100000, acc: 89.625036, ppl: 1.005814
+2022-07-20 10:58:54,581 - utils - INFO - Epoch: 4, Step: 11200, Loss: 11.571817, lr: 0.100000, acc: 89.593238, ppl: 1.005790
+2022-07-20 10:59:30,223 - utils - INFO - Epoch: 4, Step: 11250, Loss: 19.550756, lr: 0.100000, acc: 89.346390, ppl: 1.005970
+2022-07-20 11:00:05,766 - utils - INFO - Epoch: 4, Step: 11300, Loss: 16.182398, lr: 0.100000, acc: 89.505396, ppl: 1.005920
+2022-07-20 11:00:41,667 - utils - INFO - Epoch: 4, Step: 11350, Loss: 11.125697, lr: 0.100000, acc: 89.668988, ppl: 1.005737
+2022-07-20 11:01:17,311 - utils - INFO - Epoch: 4, Step: 11400, Loss: 11.109601, lr: 0.100000, acc: 89.678216, ppl: 1.005802
+2022-07-20 11:01:53,218 - utils - INFO - Epoch: 4, Step: 11450, Loss: 15.073953, lr: 0.100000, acc: 89.988289, ppl: 1.005584
+2022-07-20 11:02:28,827 - utils - INFO - Epoch: 4, Step: 11500, Loss: 16.283268, lr: 0.100000, acc: 89.583160, ppl: 1.005848
+2022-07-20 11:03:04,516 - utils - INFO - Epoch: 4, Step: 11550, Loss: 11.769464, lr: 0.100000, acc: 89.731267, ppl: 1.005742
+2022-07-20 11:03:40,270 - utils - INFO - Epoch: 4, Step: 11600, Loss: 12.592967, lr: 0.100000, acc: 89.588431, ppl: 1.005808
+2022-07-20 11:04:15,885 - utils - INFO - Epoch: 4, Step: 11650, Loss: 13.254251, lr: 0.100000, acc: 89.665047, ppl: 1.005760
+2022-07-20 11:04:51,714 - utils - INFO - Epoch: 4, Step: 11700, Loss: 13.288320, lr: 0.100000, acc: 89.702351, ppl: 1.005748
+2022-07-20 11:05:27,232 - utils - INFO - Epoch: 4, Step: 11750, Loss: 16.092104, lr: 0.100000, acc: 89.606613, ppl: 1.005803
+2022-07-20 11:06:02,787 - utils - INFO - Epoch: 4, Step: 11800, Loss: 11.099572, lr: 0.100000, acc: 89.600422, ppl: 1.005879
+2022-07-20 11:06:38,305 - utils - INFO - Epoch: 4, Step: 11850, Loss: 12.044464, lr: 0.100000, acc: 89.341154, ppl: 1.005994
+2022-07-20 11:07:14,117 - utils - INFO - Epoch: 4, Step: 11900, Loss: 12.962298, lr: 0.100000, acc: 90.021818, ppl: 1.005624
+2022-07-20 11:07:49,751 - utils - INFO - Epoch: 4, Step: 11950, Loss: 12.334350, lr: 0.100000, acc: 89.674302, ppl: 1.005780
+2022-07-20 11:08:25,011 - utils - INFO - Evaluating model
+2022-07-20 11:08:43,975 - utils - INFO - Epoch: 4 Step 12000 - Val Ppl = 1.011947 - Accuracy = 81.180268
+2022-07-20 11:08:44,174 - utils - INFO - Epoch: 4, Step: 12000, Loss: 10.818125, lr: 0.100000, acc: 89.759848, ppl: 1.005718
+2022-07-20 11:08:44,278 - utils - INFO - Saving model at checkpoints/UIModel__step_12000.pth
+2022-07-20 11:09:19,937 - utils - INFO - Epoch: 4, Step: 12050, Loss: 15.506170, lr: 0.100000, acc: 89.866304, ppl: 1.005638
+2022-07-20 11:09:55,743 - utils - INFO - Epoch: 4, Step: 12100, Loss: 13.228365, lr: 0.100000, acc: 89.831449, ppl: 1.005770
+2022-07-20 11:10:31,350 - utils - INFO - Epoch: 4, Step: 12150, Loss: 14.394620, lr: 0.100000, acc: 89.633858, ppl: 1.005770
+2022-07-20 11:11:07,145 - utils - INFO - Epoch: 4, Step: 12200, Loss: 20.513021, lr: 0.100000, acc: 89.426493, ppl: 1.005934
+2022-07-20 11:11:42,633 - utils - INFO - Epoch: 4, Step: 12250, Loss: 12.372375, lr: 0.100000, acc: 90.050078, ppl: 1.005516
+2022-07-20 11:12:18,393 - utils - INFO - Epoch: 4, Step: 12300, Loss: 13.483707, lr: 0.100000, acc: 89.700200, ppl: 1.005800
+2022-07-20 11:12:53,844 - utils - INFO - Epoch: 4, Step: 12350, Loss: 9.819334, lr: 0.100000, acc: 89.834861, ppl: 1.005652
+2022-07-20 11:13:29,440 - utils - INFO - Epoch: 4, Step: 12400, Loss: 11.494462, lr: 0.100000, acc: 89.570397, ppl: 1.005853
+2022-07-20 11:14:04,931 - utils - INFO - Epoch: 4, Step: 12450, Loss: 16.110489, lr: 0.100000, acc: 89.499916, ppl: 1.005879
+2022-07-20 11:14:40,282 - utils - INFO - Epoch: 4, Step: 12500, Loss: 13.143306, lr: 0.100000, acc: 89.904966, ppl: 1.005633
+2022-07-20 11:15:16,022 - utils - INFO - Epoch: 4, Step: 12550, Loss: 14.850814, lr: 0.100000, acc: 89.729358, ppl: 1.005781
+2022-07-20 11:15:51,644 - utils - INFO - Epoch: 4, Step: 12600, Loss: 14.626964, lr: 0.100000, acc: 89.845968, ppl: 1.005597
+2022-07-20 11:16:27,383 - utils - INFO - Epoch: 4, Step: 12650, Loss: 11.557905, lr: 0.100000, acc: 90.246806, ppl: 1.005467
+2022-07-20 11:17:03,061 - utils - INFO - Epoch: 4, Step: 12700, Loss: 10.104342, lr: 0.100000, acc: 90.102561, ppl: 1.005556
+2022-07-20 11:17:38,872 - utils - INFO - Epoch: 4, Step: 12750, Loss: 14.130493, lr: 0.100000, acc: 90.155168, ppl: 1.005497
+2022-07-20 11:18:14,541 - utils - INFO - Epoch: 4, Step: 12800, Loss: 12.985947, lr: 0.100000, acc: 89.944256, ppl: 1.005636
+2022-07-20 11:18:50,222 - utils - INFO - Epoch: 4, Step: 12850, Loss: 11.972383, lr: 0.100000, acc: 90.187101, ppl: 1.005499
+2022-07-20 11:19:25,897 - utils - INFO - Epoch: 4, Step: 12900, Loss: 15.885553, lr: 0.100000, acc: 90.030866, ppl: 1.005573
+2022-07-20 11:20:01,661 - utils - INFO - Epoch: 4, Step: 12950, Loss: 12.979348, lr: 0.100000, acc: 90.024122, ppl: 1.005532
+2022-07-20 11:20:37,233 - utils - INFO - Epoch: 4, Step: 13000, Loss: 16.780491, lr: 0.100000, acc: 90.103225, ppl: 1.005482
+2022-07-20 11:21:12,752 - utils - INFO - Epoch: 4, Step: 13050, Loss: 14.620033, lr: 0.100000, acc: 90.247349, ppl: 1.005459
+2022-07-20 11:21:48,511 - utils - INFO - Epoch: 4, Step: 13100, Loss: 12.079101, lr: 0.100000, acc: 90.174725, ppl: 1.005519
+2022-07-20 11:22:24,105 - utils - INFO - Epoch: 4, Step: 13150, Loss: 12.754900, lr: 0.100000, acc: 90.261589, ppl: 1.005460
+2022-07-20 11:22:59,774 - utils - INFO - Epoch: 4, Step: 13200, Loss: 11.474615, lr: 0.100000, acc: 90.263816, ppl: 1.005513
+2022-07-20 11:23:35,321 - utils - INFO - Epoch: 4, Step: 13250, Loss: 13.535192, lr: 0.100000, acc: 90.176761, ppl: 1.005489
+2022-07-20 11:24:10,877 - utils - INFO - Epoch: 4, Step: 13300, Loss: 13.851120, lr: 0.100000, acc: 90.417860, ppl: 1.005342
+2022-07-20 11:24:46,487 - utils - INFO - Epoch: 4, Step: 13350, Loss: 11.460018, lr: 0.100000, acc: 90.740225, ppl: 1.005131
+2022-07-20 11:25:22,265 - utils - INFO - Epoch: 4, Step: 13400, Loss: 12.587943, lr: 0.100000, acc: 90.627940, ppl: 1.005253
+2022-07-20 11:25:57,832 - utils - INFO - Epoch: 4, Step: 13450, Loss: 11.463153, lr: 0.100000, acc: 90.411394, ppl: 1.005336
+2022-07-20 11:26:33,644 - utils - INFO - Epoch: 4, Step: 13500, Loss: 10.811069, lr: 0.100000, acc: 90.581660, ppl: 1.005272
+2022-07-20 11:27:09,307 - utils - INFO - Epoch: 4, Step: 13550, Loss: 13.068186, lr: 0.100000, acc: 90.418803, ppl: 1.005426
+2022-07-20 11:27:44,819 - utils - INFO - Epoch: 4, Step: 13600, Loss: 17.974834, lr: 0.100000, acc: 90.504233, ppl: 1.005319
+2022-07-20 11:28:20,545 - utils - INFO - Epoch: 4, Step: 13650, Loss: 12.280749, lr: 0.100000, acc: 90.486213, ppl: 1.005348
+2022-07-20 11:28:56,282 - utils - INFO - Epoch: 4, Step: 13700, Loss: 12.737796, lr: 0.100000, acc: 90.641334, ppl: 1.005265
+2022-07-20 11:29:31,918 - utils - INFO - Epoch: 4, Step: 13750, Loss: 16.242794, lr: 0.100000, acc: 90.363064, ppl: 1.005385
+2022-07-20 11:30:07,573 - utils - INFO - Epoch: 4, Step: 13800, Loss: 13.492051, lr: 0.100000, acc: 89.899487, ppl: 1.005676
+2022-07-20 11:30:43,556 - utils - INFO - Epoch: 5, Step: 13850, Loss: 11.706441, lr: 0.100000, acc: 90.511059, ppl: 1.005252
+2022-07-20 11:31:19,296 - utils - INFO - Epoch: 5, Step: 13900, Loss: 12.835265, lr: 0.100000, acc: 91.076993, ppl: 1.004950
+2022-07-20 11:31:54,892 - utils - INFO - Epoch: 5, Step: 13950, Loss: 11.879284, lr: 0.100000, acc: 90.913884, ppl: 1.005022
+2022-07-20 11:32:30,448 - utils - INFO - Epoch: 5, Step: 14000, Loss: 11.870346, lr: 0.100000, acc: 91.170107, ppl: 1.004875
+2022-07-20 11:32:30,552 - utils - INFO - Saving model at checkpoints/UIModel__step_14000.pth
+2022-07-20 11:33:06,352 - utils - INFO - Epoch: 5, Step: 14050, Loss: 14.027240, lr: 0.100000, acc: 90.729596, ppl: 1.005187
+2022-07-20 11:33:41,919 - utils - INFO - Epoch: 5, Step: 14100, Loss: 8.742063, lr: 0.100000, acc: 90.750279, ppl: 1.005057
+2022-07-20 11:34:17,795 - utils - INFO - Epoch: 5, Step: 14150, Loss: 15.176679, lr: 0.100000, acc: 90.924091, ppl: 1.005128
+2022-07-20 11:34:53,713 - utils - INFO - Epoch: 5, Step: 14200, Loss: 12.702378, lr: 0.100000, acc: 90.931389, ppl: 1.005031
+2022-07-20 11:35:29,324 - utils - INFO - Epoch: 5, Step: 14250, Loss: 13.474043, lr: 0.100000, acc: 90.915726, ppl: 1.005056
+2022-07-20 11:36:05,047 - utils - INFO - Epoch: 5, Step: 14300, Loss: 13.282169, lr: 0.100000, acc: 90.656511, ppl: 1.005229
+2022-07-20 11:36:40,633 - utils - INFO - Epoch: 5, Step: 14350, Loss: 12.976545, lr: 0.100000, acc: 90.865599, ppl: 1.005085
+2022-07-20 11:37:16,219 - utils - INFO - Epoch: 5, Step: 14400, Loss: 13.068246, lr: 0.100000, acc: 90.571443, ppl: 1.005256
+2022-07-20 11:37:51,688 - utils - INFO - Epoch: 5, Step: 14450, Loss: 10.299542, lr: 0.100000, acc: 91.034204, ppl: 1.005054
+2022-07-20 11:38:27,342 - utils - INFO - Epoch: 5, Step: 14500, Loss: 12.791730, lr: 0.100000, acc: 90.441020, ppl: 1.005337
+2022-07-20 11:39:02,978 - utils - INFO - Epoch: 5, Step: 14550, Loss: 11.540403, lr: 0.100000, acc: 90.769845, ppl: 1.005055
+2022-07-20 11:39:38,692 - utils - INFO - Epoch: 5, Step: 14600, Loss: 11.429204, lr: 0.100000, acc: 91.138543, ppl: 1.004930
+2022-07-20 11:40:14,170 - utils - INFO - Epoch: 5, Step: 14650, Loss: 10.420255, lr: 0.100000, acc: 90.861057, ppl: 1.005090
+2022-07-20 11:40:49,850 - utils - INFO - Epoch: 5, Step: 14700, Loss: 10.315706, lr: 0.100000, acc: 90.554925, ppl: 1.005255
+2022-07-20 11:41:25,480 - utils - INFO - Epoch: 5, Step: 14750, Loss: 9.245282, lr: 0.100000, acc: 90.989208, ppl: 1.004973
+2022-07-20 11:42:01,056 - utils - INFO - Epoch: 5, Step: 14800, Loss: 13.172914, lr: 0.100000, acc: 90.565000, ppl: 1.005274
+2022-07-20 11:42:36,744 - utils - INFO - Epoch: 5, Step: 14850, Loss: 13.983704, lr: 0.100000, acc: 90.806430, ppl: 1.005112
+2022-07-20 11:43:12,327 - utils - INFO - Epoch: 5, Step: 14900, Loss: 14.012895, lr: 0.100000, acc: 90.793700, ppl: 1.005146
+2022-07-20 11:43:47,953 - utils - INFO - Epoch: 5, Step: 14950, Loss: 10.858400, lr: 0.100000, acc: 90.632822, ppl: 1.005179
+2022-07-20 11:44:23,601 - utils - INFO - Epoch: 5, Step: 15000, Loss: 11.487821, lr: 0.100000, acc: 91.021205, ppl: 1.004964
+2022-07-20 11:44:59,304 - utils - INFO - Epoch: 5, Step: 15050, Loss: 11.130257, lr: 0.100000, acc: 90.981154, ppl: 1.005012
+2022-07-20 11:45:34,845 - utils - INFO - Epoch: 5, Step: 15100, Loss: 16.904652, lr: 0.100000, acc: 90.836757, ppl: 1.005160
+2022-07-20 11:46:10,762 - utils - INFO - Epoch: 5, Step: 15150, Loss: 10.799932, lr: 0.100000, acc: 91.137203, ppl: 1.004872
+2022-07-20 11:46:46,318 - utils - INFO - Epoch: 5, Step: 15200, Loss: 11.846809, lr: 0.100000, acc: 90.932838, ppl: 1.005020
+2022-07-20 11:47:22,027 - utils - INFO - Epoch: 5, Step: 15250, Loss: 10.787189, lr: 0.100000, acc: 90.859301, ppl: 1.005154
+2022-07-20 11:47:57,620 - utils - INFO - Epoch: 5, Step: 15300, Loss: 12.027859, lr: 0.100000, acc: 91.244020, ppl: 1.004877
+2022-07-20 11:48:33,390 - utils - INFO - Epoch: 5, Step: 15350, Loss: 12.102682, lr: 0.100000, acc: 91.120632, ppl: 1.004917
+2022-07-20 11:49:08,974 - utils - INFO - Epoch: 5, Step: 15400, Loss: 7.678509, lr: 0.100000, acc: 91.248173, ppl: 1.004891
+2022-07-20 11:49:44,435 - utils - INFO - Epoch: 5, Step: 15450, Loss: 9.671391, lr: 0.100000, acc: 91.098033, ppl: 1.004972
+2022-07-20 11:50:20,077 - utils - INFO - Epoch: 5, Step: 15500, Loss: 11.754045, lr: 0.100000, acc: 91.315318, ppl: 1.004847
+2022-07-20 11:50:55,743 - utils - INFO - Epoch: 5, Step: 15550, Loss: 12.423100, lr: 0.100000, acc: 91.578378, ppl: 1.004677
+2022-07-20 11:51:31,510 - utils - INFO - Epoch: 5, Step: 15600, Loss: 9.695285, lr: 0.100000, acc: 91.035766, ppl: 1.004971
+2022-07-20 11:52:07,034 - utils - INFO - Epoch: 5, Step: 15650, Loss: 12.705872, lr: 0.100000, acc: 91.226725, ppl: 1.004882
+2022-07-20 11:52:42,549 - utils - INFO - Epoch: 5, Step: 15700, Loss: 10.304418, lr: 0.100000, acc: 91.005237, ppl: 1.005012
+2022-07-20 11:53:18,149 - utils - INFO - Epoch: 5, Step: 15750, Loss: 9.970308, lr: 0.100000, acc: 91.045906, ppl: 1.005014
+2022-07-20 11:53:53,634 - utils - INFO - Epoch: 5, Step: 15800, Loss: 10.848816, lr: 0.100000, acc: 91.121305, ppl: 1.004971
+2022-07-20 11:54:29,261 - utils - INFO - Epoch: 5, Step: 15850, Loss: 12.046837, lr: 0.100000, acc: 90.806146, ppl: 1.005107
+2022-07-20 11:55:04,989 - utils - INFO - Epoch: 5, Step: 15900, Loss: 12.793719, lr: 0.100000, acc: 91.421225, ppl: 1.004795
+2022-07-20 11:55:40,598 - utils - INFO - Epoch: 5, Step: 15950, Loss: 12.151453, lr: 0.100000, acc: 91.332287, ppl: 1.004821
+2022-07-20 11:56:16,306 - utils - INFO - Epoch: 5, Step: 16000, Loss: 13.920200, lr: 0.100000, acc: 91.494437, ppl: 1.004781
+2022-07-20 11:56:16,434 - utils - INFO - Saving model at checkpoints/UIModel__step_16000.pth
+2022-07-20 11:56:51,941 - utils - INFO - Epoch: 5, Step: 16050, Loss: 10.977959, lr: 0.100000, acc: 91.229103, ppl: 1.004939
+2022-07-20 11:57:27,607 - utils - INFO - Epoch: 5, Step: 16100, Loss: 10.774796, lr: 0.100000, acc: 91.348794, ppl: 1.004834
+2022-07-20 11:58:03,297 - utils - INFO - Epoch: 5, Step: 16150, Loss: 10.858438, lr: 0.100000, acc: 91.434020, ppl: 1.004821
+2022-07-20 11:58:38,859 - utils - INFO - Epoch: 5, Step: 16200, Loss: 10.418040, lr: 0.100000, acc: 91.342630, ppl: 1.004848
+2022-07-20 11:59:14,625 - utils - INFO - Epoch: 5, Step: 16250, Loss: 8.849704, lr: 0.100000, acc: 91.294394, ppl: 1.004863
+2022-07-20 11:59:50,159 - utils - INFO - Epoch: 5, Step: 16300, Loss: 11.546550, lr: 0.100000, acc: 91.010048, ppl: 1.005016
+2022-07-20 12:00:25,860 - utils - INFO - Epoch: 5, Step: 16350, Loss: 12.091666, lr: 0.100000, acc: 91.319040, ppl: 1.004841
+2022-07-20 12:01:01,570 - utils - INFO - Epoch: 5, Step: 16400, Loss: 10.115139, lr: 0.100000, acc: 91.495203, ppl: 1.004780
+2022-07-20 12:01:37,396 - utils - INFO - Epoch: 5, Step: 16450, Loss: 9.501569, lr: 0.100000, acc: 91.514819, ppl: 1.004729
+2022-07-20 12:02:12,930 - utils - INFO - Epoch: 5, Step: 16500, Loss: 13.009405, lr: 0.100000, acc: 91.451743, ppl: 1.004720
+2022-07-20 12:02:48,639 - utils - INFO - Epoch: 5, Step: 16550, Loss: 10.264805, lr: 0.100000, acc: 91.357223, ppl: 1.004781
+2022-07-20 12:03:24,498 - utils - INFO - Epoch: 6, Step: 16600, Loss: 12.600348, lr: 0.100000, acc: 91.518464, ppl: 1.004747
+2022-07-20 12:04:00,105 - utils - INFO - Epoch: 6, Step: 16650, Loss: 14.361723, lr: 0.100000, acc: 92.097509, ppl: 1.004372
+2022-07-20 12:04:35,817 - utils - INFO - Epoch: 6, Step: 16700, Loss: 12.436239, lr: 0.100000, acc: 91.668863, ppl: 1.004586
+2022-07-20 12:05:11,420 - utils - INFO - Epoch: 6, Step: 16750, Loss: 9.769259, lr: 0.100000, acc: 92.021809, ppl: 1.004420
+2022-07-20 12:05:47,091 - utils - INFO - Epoch: 6, Step: 16800, Loss: 10.237392, lr: 0.100000, acc: 91.794846, ppl: 1.004519
+2022-07-20 12:06:22,704 - utils - INFO - Epoch: 6, Step: 16850, Loss: 9.952435, lr: 0.100000, acc: 91.916590, ppl: 1.004514
+2022-07-20 12:06:58,259 - utils - INFO - Epoch: 6, Step: 16900, Loss: 9.937133, lr: 0.100000, acc: 91.766347, ppl: 1.004533
+2022-07-20 12:07:33,890 - utils - INFO - Epoch: 6, Step: 16950, Loss: 11.271179, lr: 0.100000, acc: 91.596589, ppl: 1.004677
+2022-07-20 12:08:09,635 - utils - INFO - Epoch: 6, Step: 17000, Loss: 11.478076, lr: 0.100000, acc: 92.078483, ppl: 1.004431
+2022-07-20 12:08:45,192 - utils - INFO - Epoch: 6, Step: 17050, Loss: 10.911190, lr: 0.100000, acc: 91.974958, ppl: 1.004426
+2022-07-20 12:09:20,915 - utils - INFO - Epoch: 6, Step: 17100, Loss: 8.080700, lr: 0.100000, acc: 91.723422, ppl: 1.004571
+2022-07-20 12:09:56,522 - utils - INFO - Epoch: 6, Step: 17150, Loss: 12.163568, lr: 0.100000, acc: 91.668881, ppl: 1.004633
+2022-07-20 12:10:32,034 - utils - INFO - Epoch: 6, Step: 17200, Loss: 13.267288, lr: 0.100000, acc: 91.866105, ppl: 1.004473
+2022-07-20 12:11:07,757 - utils - INFO - Epoch: 6, Step: 17250, Loss: 8.528913, lr: 0.100000, acc: 91.737111, ppl: 1.004545
+2022-07-20 12:11:43,106 - utils - INFO - Epoch: 6, Step: 17300, Loss: 9.161693, lr: 0.100000, acc: 92.057099, ppl: 1.004440
+2022-07-20 12:12:18,910 - utils - INFO - Epoch: 6, Step: 17350, Loss: 11.966855, lr: 0.100000, acc: 91.838366, ppl: 1.004548
+2022-07-20 12:12:54,511 - utils - INFO - Epoch: 6, Step: 17400, Loss: 9.993086, lr: 0.100000, acc: 91.584481, ppl: 1.004680
+2022-07-20 12:13:30,119 - utils - INFO - Epoch: 6, Step: 17450, Loss: 10.494244, lr: 0.100000, acc: 91.808126, ppl: 1.004558
+2022-07-20 12:14:05,653 - utils - INFO - Epoch: 6, Step: 17500, Loss: 11.320145, lr: 0.100000, acc: 92.095924, ppl: 1.004401
+2022-07-20 12:14:41,111 - utils - INFO - Epoch: 6, Step: 17550, Loss: 10.709813, lr: 0.100000, acc: 91.520011, ppl: 1.004780
+2022-07-20 12:15:16,482 - utils - INFO - Epoch: 6, Step: 17600, Loss: 12.321057, lr: 0.100000, acc: 91.866666, ppl: 1.004488
+2022-07-20 12:15:52,169 - utils - INFO - Epoch: 6, Step: 17650, Loss: 9.529630, lr: 0.100000, acc: 91.967368, ppl: 1.004464
+2022-07-20 12:16:27,681 - utils - INFO - Epoch: 6, Step: 17700, Loss: 7.903723, lr: 0.100000, acc: 91.870690, ppl: 1.004516
+2022-07-20 12:17:03,051 - utils - INFO - Epoch: 6, Step: 17750, Loss: 9.333622, lr: 0.100000, acc: 91.530621, ppl: 1.004683
+2022-07-20 12:17:38,691 - utils - INFO - Epoch: 6, Step: 17800, Loss: 11.076381, lr: 0.100000, acc: 91.691536, ppl: 1.004580
+2022-07-20 12:18:14,251 - utils - INFO - Epoch: 6, Step: 17850, Loss: 9.377578, lr: 0.100000, acc: 91.709997, ppl: 1.004564
+2022-07-20 12:18:49,867 - utils - INFO - Epoch: 6, Step: 17900, Loss: 11.912770, lr: 0.100000, acc: 91.950494, ppl: 1.004461
+2022-07-20 12:19:25,388 - utils - INFO - Epoch: 6, Step: 17950, Loss: 8.470563, lr: 0.100000, acc: 91.981997, ppl: 1.004448
+2022-07-20 12:20:00,422 - utils - INFO - Evaluating model
+2022-07-20 12:20:19,413 - utils - INFO - Epoch: 6 Step 18000 - Val Ppl = 1.012052 - Accuracy = 81.266703
+2022-07-20 12:20:19,414 - utils - INFO - Decay lr, current lr: 0.050000
+2022-07-20 12:20:19,621 - utils - INFO - Epoch: 6, Step: 18000, Loss: 13.123425, lr: 0.050000, acc: 92.065324, ppl: 1.004425
+2022-07-20 12:20:19,727 - utils - INFO - Saving model at checkpoints/UIModel__step_18000.pth
+2022-07-20 12:20:55,556 - utils - INFO - Epoch: 6, Step: 18050, Loss: 11.232874, lr: 0.050000, acc: 92.317189, ppl: 1.004261
+2022-07-20 12:21:31,159 - utils - INFO - Epoch: 6, Step: 18100, Loss: 8.557314, lr: 0.050000, acc: 92.928437, ppl: 1.003914
+2022-07-20 12:22:06,697 - utils - INFO - Epoch: 6, Step: 18150, Loss: 10.041245, lr: 0.050000, acc: 92.711773, ppl: 1.004038
+2022-07-20 12:22:42,100 - utils - INFO - Epoch: 6, Step: 18200, Loss: 12.794539, lr: 0.050000, acc: 92.695363, ppl: 1.004032
+2022-07-20 12:23:17,812 - utils - INFO - Epoch: 6, Step: 18250, Loss: 11.138290, lr: 0.050000, acc: 93.201558, ppl: 1.003774
+2022-07-20 12:23:53,275 - utils - INFO - Epoch: 6, Step: 18300, Loss: 7.961467, lr: 0.050000, acc: 93.266991, ppl: 1.003724
+2022-07-20 12:24:28,885 - utils - INFO - Epoch: 6, Step: 18350, Loss: 9.180446, lr: 0.050000, acc: 93.247890, ppl: 1.003781
+2022-07-20 12:25:04,519 - utils - INFO - Epoch: 6, Step: 18400, Loss: 11.234980, lr: 0.050000, acc: 93.033909, ppl: 1.003901
+2022-07-20 12:25:54,482 - utils - INFO - Epoch: 6, Step: 18450, Loss: 6.867566, lr: 0.050000, acc: 93.394327, ppl: 1.003749
+2022-07-20 12:26:36,857 - utils - INFO - Epoch: 6, Step: 18500, Loss: 10.187523, lr: 0.050000, acc: 93.320973, ppl: 1.003772
+2022-07-20 12:27:12,399 - utils - INFO - Epoch: 6, Step: 18550, Loss: 8.343117, lr: 0.050000, acc: 93.347044, ppl: 1.003719
+2022-07-20 12:27:47,975 - utils - INFO - Epoch: 6, Step: 18600, Loss: 11.070393, lr: 0.050000, acc: 93.191820, ppl: 1.003779
+2022-07-20 12:28:23,483 - utils - INFO - Epoch: 6, Step: 18650, Loss: 8.110195, lr: 0.050000, acc: 93.440102, ppl: 1.003614
+2022-07-20 12:28:59,047 - utils - INFO - Epoch: 6, Step: 18700, Loss: 9.375018, lr: 0.050000, acc: 93.394241, ppl: 1.003697
+2022-07-20 12:29:34,457 - utils - INFO - Epoch: 6, Step: 18750, Loss: 12.559756, lr: 0.050000, acc: 93.279009, ppl: 1.003734
+2022-07-20 12:30:10,131 - utils - INFO - Epoch: 6, Step: 18800, Loss: 11.824096, lr: 0.050000, acc: 93.507071, ppl: 1.003607
+2022-07-20 12:30:45,760 - utils - INFO - Epoch: 6, Step: 18850, Loss: 8.398453, lr: 0.050000, acc: 93.435065, ppl: 1.003668
+2022-07-20 12:31:21,355 - utils - INFO - Epoch: 6, Step: 18900, Loss: 8.894548, lr: 0.050000, acc: 93.588219, ppl: 1.003578
+2022-07-20 12:31:56,948 - utils - INFO - Epoch: 6, Step: 18950, Loss: 9.194568, lr: 0.050000, acc: 93.238965, ppl: 1.003748
+2022-07-20 12:32:32,453 - utils - INFO - Epoch: 6, Step: 19000, Loss: 8.654184, lr: 0.050000, acc: 93.094013, ppl: 1.003872
+2022-07-20 12:33:08,212 - utils - INFO - Epoch: 6, Step: 19050, Loss: 10.777623, lr: 0.050000, acc: 93.191823, ppl: 1.003787
+2022-07-20 12:33:43,862 - utils - INFO - Epoch: 6, Step: 19100, Loss: 9.985572, lr: 0.050000, acc: 93.432506, ppl: 1.003661
+2022-07-20 12:34:19,463 - utils - INFO - Epoch: 6, Step: 19150, Loss: 7.409607, lr: 0.050000, acc: 93.458991, ppl: 1.003645
+2022-07-20 12:34:55,084 - utils - INFO - Epoch: 6, Step: 19200, Loss: 7.614504, lr: 0.050000, acc: 93.339245, ppl: 1.003754
+2022-07-20 12:35:30,673 - utils - INFO - Epoch: 6, Step: 19250, Loss: 7.458709, lr: 0.050000, acc: 93.489154, ppl: 1.003622
+2022-07-20 12:36:06,335 - utils - INFO - Epoch: 6, Step: 19300, Loss: 8.636619, lr: 0.050000, acc: 93.368741, ppl: 1.003673
+2022-07-20 12:36:42,405 - utils - INFO - Epoch: 7, Step: 19350, Loss: 8.015255, lr: 0.050000, acc: 93.569413, ppl: 1.003559
+2022-07-20 12:37:18,135 - utils - INFO - Epoch: 7, Step: 19400, Loss: 5.957731, lr: 0.050000, acc: 94.067944, ppl: 1.003300
+2022-07-20 12:37:53,761 - utils - INFO - Epoch: 7, Step: 19450, Loss: 6.286419, lr: 0.050000, acc: 94.145965, ppl: 1.003202
+2022-07-20 12:38:29,349 - utils - INFO - Epoch: 7, Step: 19500, Loss: 6.944735, lr: 0.050000, acc: 94.000268, ppl: 1.003318
+2022-07-20 12:39:04,928 - utils - INFO - Epoch: 7, Step: 19550, Loss: 9.484814, lr: 0.050000, acc: 94.070166, ppl: 1.003277
+2022-07-20 12:39:40,652 - utils - INFO - Epoch: 7, Step: 19600, Loss: 6.822670, lr: 0.050000, acc: 94.046211, ppl: 1.003237
+2022-07-20 12:40:16,158 - utils - INFO - Epoch: 7, Step: 19650, Loss: 7.547946, lr: 0.050000, acc: 94.071176, ppl: 1.003305
+2022-07-20 12:40:51,960 - utils - INFO - Epoch: 7, Step: 19700, Loss: 5.347176, lr: 0.050000, acc: 94.057293, ppl: 1.003281
+2022-07-20 12:41:27,522 - utils - INFO - Epoch: 7, Step: 19750, Loss: 9.513891, lr: 0.050000, acc: 94.231374, ppl: 1.003188
+2022-07-20 12:42:03,083 - utils - INFO - Epoch: 7, Step: 19800, Loss: 9.250337, lr: 0.050000, acc: 94.135740, ppl: 1.003236
+2022-07-20 12:42:38,421 - utils - INFO - Epoch: 7, Step: 19850, Loss: 7.454185, lr: 0.050000, acc: 94.127881, ppl: 1.003249
+2022-07-20 12:43:13,998 - utils - INFO - Epoch: 7, Step: 19900, Loss: 4.174287, lr: 0.050000, acc: 93.928692, ppl: 1.003341
+2022-07-20 12:43:49,551 - utils - INFO - Epoch: 7, Step: 19950, Loss: 8.398431, lr: 0.050000, acc: 93.932672, ppl: 1.003370
+2022-07-20 12:44:25,312 - utils - INFO - Epoch: 7, Step: 20000, Loss: 8.821889, lr: 0.050000, acc: 94.003859, ppl: 1.003335
+2022-07-20 12:44:25,436 - utils - INFO - Saving model at checkpoints/UIModel__step_20000.pth
+2022-07-20 12:45:00,897 - utils - INFO - Epoch: 7, Step: 20050, Loss: 8.021267, lr: 0.050000, acc: 94.563919, ppl: 1.002986
+2022-07-20 12:45:36,583 - utils - INFO - Epoch: 7, Step: 20100, Loss: 7.159522, lr: 0.050000, acc: 93.840863, ppl: 1.003416
+2022-07-20 12:46:12,109 - utils - INFO - Epoch: 7, Step: 20150, Loss: 7.134022, lr: 0.050000, acc: 93.929734, ppl: 1.003304
+2022-07-20 12:46:47,756 - utils - INFO - Epoch: 7, Step: 20200, Loss: 6.460132, lr: 0.050000, acc: 94.002734, ppl: 1.003266
+2022-07-20 12:47:23,332 - utils - INFO - Epoch: 7, Step: 20250, Loss: 8.742719, lr: 0.050000, acc: 93.937169, ppl: 1.003336
+2022-07-20 12:47:58,954 - utils - INFO - Epoch: 7, Step: 20300, Loss: 7.706801, lr: 0.050000, acc: 94.400279, ppl: 1.003073
+2022-07-20 12:48:34,487 - utils - INFO - Epoch: 7, Step: 20350, Loss: 7.461265, lr: 0.050000, acc: 94.019666, ppl: 1.003270
+2022-07-20 12:49:10,088 - utils - INFO - Epoch: 7, Step: 20400, Loss: 6.782462, lr: 0.050000, acc: 94.116154, ppl: 1.003244
+2022-07-20 12:49:45,587 - utils - INFO - Epoch: 7, Step: 20450, Loss: 7.793890, lr: 0.050000, acc: 93.929056, ppl: 1.003337
+2022-07-20 12:50:20,992 - utils - INFO - Epoch: 7, Step: 20500, Loss: 7.210245, lr: 0.050000, acc: 94.269761, ppl: 1.003182
+2022-07-20 12:50:56,603 - utils - INFO - Epoch: 7, Step: 20550, Loss: 8.957630, lr: 0.050000, acc: 93.922070, ppl: 1.003334
+2022-07-20 12:51:32,173 - utils - INFO - Epoch: 7, Step: 20600, Loss: 7.872313, lr: 0.050000, acc: 94.290566, ppl: 1.003139
+2022-07-20 12:52:07,727 - utils - INFO - Epoch: 7, Step: 20650, Loss: 7.900169, lr: 0.050000, acc: 94.038629, ppl: 1.003321
+2022-07-20 12:52:43,154 - utils - INFO - Epoch: 7, Step: 20700, Loss: 7.223966, lr: 0.050000, acc: 94.242846, ppl: 1.003183
+2022-07-20 12:53:18,660 - utils - INFO - Epoch: 7, Step: 20750, Loss: 8.879349, lr: 0.050000, acc: 94.103716, ppl: 1.003294
+2022-07-20 12:53:54,225 - utils - INFO - Epoch: 7, Step: 20800, Loss: 6.047587, lr: 0.050000, acc: 94.067011, ppl: 1.003248
+2022-07-20 12:54:29,856 - utils - INFO - Epoch: 7, Step: 20850, Loss: 9.139933, lr: 0.050000, acc: 94.137671, ppl: 1.003264
+2022-07-20 12:55:05,505 - utils - INFO - Epoch: 7, Step: 20900, Loss: 7.976744, lr: 0.050000, acc: 93.990407, ppl: 1.003304
+2022-07-20 12:55:41,164 - utils - INFO - Epoch: 7, Step: 20950, Loss: 7.182785, lr: 0.050000, acc: 94.065756, ppl: 1.003238
+2022-07-20 12:56:16,544 - utils - INFO - Epoch: 7, Step: 21000, Loss: 8.278384, lr: 0.050000, acc: 94.029173, ppl: 1.003282
+2022-07-20 12:56:52,195 - utils - INFO - Epoch: 7, Step: 21050, Loss: 6.549392, lr: 0.050000, acc: 94.044998, ppl: 1.003289
+2022-07-20 12:57:27,815 - utils - INFO - Epoch: 7, Step: 21100, Loss: 8.765742, lr: 0.050000, acc: 94.245943, ppl: 1.003183
+2022-07-20 12:58:03,471 - utils - INFO - Epoch: 7, Step: 21150, Loss: 6.922565, lr: 0.050000, acc: 94.277881, ppl: 1.003147
+2022-07-20 12:58:39,107 - utils - INFO - Epoch: 7, Step: 21200, Loss: 7.537249, lr: 0.050000, acc: 94.111405, ppl: 1.003269
+2022-07-20 12:59:14,719 - utils - INFO - Epoch: 7, Step: 21250, Loss: 6.352776, lr: 0.050000, acc: 94.138906, ppl: 1.003242
+2022-07-20 12:59:50,180 - utils - INFO - Epoch: 7, Step: 21300, Loss: 7.497965, lr: 0.050000, acc: 94.296067, ppl: 1.003152
+2022-07-20 13:00:25,682 - utils - INFO - Epoch: 7, Step: 21350, Loss: 6.490704, lr: 0.050000, acc: 94.271420, ppl: 1.003185
+2022-07-20 13:01:01,443 - utils - INFO - Epoch: 7, Step: 21400, Loss: 9.166569, lr: 0.050000, acc: 93.907300, ppl: 1.003345
+2022-07-20 13:01:36,841 - utils - INFO - Epoch: 7, Step: 21450, Loss: 7.466180, lr: 0.050000, acc: 94.122107, ppl: 1.003239
+2022-07-20 13:02:12,573 - utils - INFO - Epoch: 7, Step: 21500, Loss: 7.984099, lr: 0.050000, acc: 94.001939, ppl: 1.003333
+2022-07-20 13:02:48,053 - utils - INFO - Epoch: 7, Step: 21550, Loss: 6.896182, lr: 0.050000, acc: 94.211469, ppl: 1.003211
+2022-07-20 13:03:23,645 - utils - INFO - Epoch: 7, Step: 21600, Loss: 7.993691, lr: 0.050000, acc: 94.141358, ppl: 1.003247
+2022-07-20 13:03:59,430 - utils - INFO - Epoch: 7, Step: 21650, Loss: 6.639916, lr: 0.050000, acc: 94.510041, ppl: 1.003013
+2022-07-20 13:04:35,008 - utils - INFO - Epoch: 7, Step: 21700, Loss: 6.161830, lr: 0.050000, acc: 94.228081, ppl: 1.003161
+2022-07-20 13:05:10,653 - utils - INFO - Epoch: 7, Step: 21750, Loss: 8.848887, lr: 0.050000, acc: 94.286707, ppl: 1.003166
+2022-07-20 13:05:46,146 - utils - INFO - Epoch: 7, Step: 21800, Loss: 8.063564, lr: 0.050000, acc: 94.119512, ppl: 1.003227
+2022-07-20 13:06:21,892 - utils - INFO - Epoch: 7, Step: 21850, Loss: 7.117797, lr: 0.050000, acc: 94.277207, ppl: 1.003197
+2022-07-20 13:06:57,615 - utils - INFO - Epoch: 7, Step: 21900, Loss: 6.910217, lr: 0.050000, acc: 94.280499, ppl: 1.003181
+2022-07-20 13:07:33,504 - utils - INFO - Epoch: 7, Step: 21950, Loss: 9.004763, lr: 0.050000, acc: 93.968198, ppl: 1.003328
+2022-07-20 13:08:09,275 - utils - INFO - Epoch: 7, Step: 22000, Loss: 10.709915, lr: 0.050000, acc: 94.047589, ppl: 1.003368
+2022-07-20 13:08:09,382 - utils - INFO - Saving model at checkpoints/UIModel__step_22000.pth
+2022-07-20 13:08:45,129 - utils - INFO - Epoch: 7, Step: 22050, Loss: 8.107195, lr: 0.050000, acc: 94.202294, ppl: 1.003209
+2022-07-20 13:09:20,874 - utils - INFO - Epoch: 7, Step: 22100, Loss: 8.481201, lr: 0.050000, acc: 94.209390, ppl: 1.003225
+2022-07-20 13:09:57,243 - utils - INFO - Epoch: 8, Step: 22150, Loss: 8.836597, lr: 0.050000, acc: 94.575746, ppl: 1.002978
+2022-07-20 13:10:33,161 - utils - INFO - Epoch: 8, Step: 22200, Loss: 5.944933, lr: 0.050000, acc: 94.748147, ppl: 1.002865
+2022-07-20 13:11:09,048 - utils - INFO - Epoch: 8, Step: 22250, Loss: 6.705591, lr: 0.050000, acc: 94.697764, ppl: 1.002888
+2022-07-20 13:11:44,795 - utils - INFO - Epoch: 8, Step: 22300, Loss: 7.546643, lr: 0.050000, acc: 94.620322, ppl: 1.002931
+2022-07-20 13:12:20,541 - utils - INFO - Epoch: 8, Step: 22350, Loss: 7.009840, lr: 0.050000, acc: 94.703359, ppl: 1.002926
+2022-07-20 13:12:56,387 - utils - INFO - Epoch: 8, Step: 22400, Loss: 6.772359, lr: 0.050000, acc: 94.888466, ppl: 1.002807
+2022-07-20 13:13:32,078 - utils - INFO - Epoch: 8, Step: 22450, Loss: 12.002400, lr: 0.050000, acc: 94.248850, ppl: 1.003138
+2022-07-20 13:14:07,825 - utils - INFO - Epoch: 8, Step: 22500, Loss: 6.523402, lr: 0.050000, acc: 94.384518, ppl: 1.003088
+2022-07-20 13:14:43,608 - utils - INFO - Epoch: 8, Step: 22550, Loss: 6.063931, lr: 0.050000, acc: 94.733547, ppl: 1.002866
+2022-07-20 13:15:19,433 - utils - INFO - Epoch: 8, Step: 22600, Loss: 9.397696, lr: 0.050000, acc: 94.727900, ppl: 1.002888
+2022-07-20 13:15:55,209 - utils - INFO - Epoch: 8, Step: 22650, Loss: 9.430541, lr: 0.050000, acc: 94.612194, ppl: 1.002942
+2022-07-20 13:16:31,100 - utils - INFO - Epoch: 8, Step: 22700, Loss: 6.866856, lr: 0.050000, acc: 94.582706, ppl: 1.002949
+2022-07-20 13:17:06,875 - utils - INFO - Epoch: 8, Step: 22750, Loss: 6.831896, lr: 0.050000, acc: 94.811672, ppl: 1.002824
+2022-07-20 13:17:42,461 - utils - INFO - Epoch: 8, Step: 22800, Loss: 6.027383, lr: 0.050000, acc: 94.711374, ppl: 1.002890
+2022-07-20 13:18:18,241 - utils - INFO - Epoch: 8, Step: 22850, Loss: 6.333287, lr: 0.050000, acc: 94.576819, ppl: 1.002987
+2022-07-20 13:18:53,997 - utils - INFO - Epoch: 8, Step: 22900, Loss: 5.119984, lr: 0.050000, acc: 94.912895, ppl: 1.002832
+2022-07-20 13:19:29,733 - utils - INFO - Epoch: 8, Step: 22950, Loss: 5.392385, lr: 0.050000, acc: 94.563623, ppl: 1.003012
+2022-07-20 13:20:05,598 - utils - INFO - Epoch: 8, Step: 23000, Loss: 9.527452, lr: 0.050000, acc: 94.448747, ppl: 1.003045
+2022-07-20 13:20:41,404 - utils - INFO - Epoch: 8, Step: 23050, Loss: 8.180997, lr: 0.050000, acc: 94.381070, ppl: 1.003091
+2022-07-20 13:21:17,333 - utils - INFO - Epoch: 8, Step: 23100, Loss: 6.450544, lr: 0.050000, acc: 94.435752, ppl: 1.003015
+2022-07-20 13:21:53,162 - utils - INFO - Epoch: 8, Step: 23150, Loss: 7.269500, lr: 0.050000, acc: 94.598858, ppl: 1.002940
+2022-07-20 13:22:28,853 - utils - INFO - Epoch: 8, Step: 23200, Loss: 7.326844, lr: 0.050000, acc: 94.606189, ppl: 1.002973
+2022-07-20 13:23:04,851 - utils - INFO - Epoch: 8, Step: 23250, Loss: 5.493172, lr: 0.050000, acc: 94.727999, ppl: 1.002892
+2022-07-20 13:23:40,680 - utils - INFO - Epoch: 8, Step: 23300, Loss: 7.047205, lr: 0.050000, acc: 94.708805, ppl: 1.002911
+2022-07-20 13:24:16,466 - utils - INFO - Epoch: 8, Step: 23350, Loss: 8.062956, lr: 0.050000, acc: 94.612065, ppl: 1.002947
+2022-07-20 13:24:52,211 - utils - INFO - Epoch: 8, Step: 23400, Loss: 9.551268, lr: 0.050000, acc: 94.452369, ppl: 1.002985
+2022-07-20 13:25:28,134 - utils - INFO - Epoch: 8, Step: 23450, Loss: 6.111015, lr: 0.050000, acc: 94.565862, ppl: 1.003020
+2022-07-20 13:26:04,084 - utils - INFO - Epoch: 8, Step: 23500, Loss: 7.487916, lr: 0.050000, acc: 94.463359, ppl: 1.003062
+2022-07-20 13:26:40,041 - utils - INFO - Epoch: 8, Step: 23550, Loss: 9.759607, lr: 0.050000, acc: 94.859789, ppl: 1.002783
+2022-07-20 13:27:15,726 - utils - INFO - Epoch: 8, Step: 23600, Loss: 6.630304, lr: 0.050000, acc: 94.626372, ppl: 1.002970
+2022-07-20 13:27:51,596 - utils - INFO - Epoch: 8, Step: 23650, Loss: 8.323019, lr: 0.050000, acc: 94.432988, ppl: 1.003026
+2022-07-20 13:28:27,422 - utils - INFO - Epoch: 8, Step: 23700, Loss: 8.711165, lr: 0.050000, acc: 94.420259, ppl: 1.003056
+2022-07-20 13:29:03,122 - utils - INFO - Epoch: 8, Step: 23750, Loss: 8.448208, lr: 0.050000, acc: 94.401394, ppl: 1.003074
+2022-07-20 13:29:39,004 - utils - INFO - Epoch: 8, Step: 23800, Loss: 7.272927, lr: 0.050000, acc: 94.389238, ppl: 1.003095
+2022-07-20 13:30:14,648 - utils - INFO - Epoch: 8, Step: 23850, Loss: 7.297144, lr: 0.050000, acc: 94.293574, ppl: 1.003177
+2022-07-20 13:30:50,416 - utils - INFO - Epoch: 8, Step: 23900, Loss: 6.841110, lr: 0.050000, acc: 94.887958, ppl: 1.002851
+2022-07-20 13:31:26,207 - utils - INFO - Epoch: 8, Step: 23950, Loss: 6.033341, lr: 0.050000, acc: 94.582329, ppl: 1.002975
+2022-07-20 13:32:01,655 - utils - INFO - Evaluating model
+2022-07-20 13:32:20,552 - utils - INFO - Epoch: 8 Step 24000 - Val Ppl = 1.012814 - Accuracy = 81.408003
+2022-07-20 13:32:20,553 - utils - INFO - Decay lr, current lr: 0.025000
+2022-07-20 13:32:20,759 - utils - INFO - Epoch: 8, Step: 24000, Loss: 6.139935, lr: 0.025000, acc: 94.524552, ppl: 1.003003
+2022-07-20 13:32:20,891 - utils - INFO - Saving model at checkpoints/UIModel__step_24000.pth
+2022-07-20 13:32:56,600 - utils - INFO - Epoch: 8, Step: 24050, Loss: 5.578122, lr: 0.025000, acc: 94.750678, ppl: 1.002862
+2022-07-20 13:33:32,415 - utils - INFO - Epoch: 8, Step: 24100, Loss: 5.340721, lr: 0.025000, acc: 94.919581, ppl: 1.002800
+2022-07-20 13:34:08,304 - utils - INFO - Epoch: 8, Step: 24150, Loss: 6.022497, lr: 0.025000, acc: 94.863979, ppl: 1.002854
+2022-07-20 13:34:43,940 - utils - INFO - Epoch: 8, Step: 24200, Loss: 8.503951, lr: 0.025000, acc: 94.835200, ppl: 1.002847
+2022-07-20 13:35:19,804 - utils - INFO - Epoch: 8, Step: 24250, Loss: 6.569268, lr: 0.025000, acc: 95.045906, ppl: 1.002732
+2022-07-20 13:35:55,434 - utils - INFO - Epoch: 8, Step: 24300, Loss: 6.025355, lr: 0.025000, acc: 95.365837, ppl: 1.002586
+2022-07-20 13:36:31,184 - utils - INFO - Epoch: 8, Step: 24350, Loss: 5.631120, lr: 0.025000, acc: 95.249310, ppl: 1.002616
+2022-07-20 13:37:06,921 - utils - INFO - Epoch: 8, Step: 24400, Loss: 6.526022, lr: 0.025000, acc: 95.108122, ppl: 1.002682
+2022-07-20 13:37:42,515 - utils - INFO - Epoch: 8, Step: 24450, Loss: 5.355495, lr: 0.025000, acc: 94.812165, ppl: 1.002864
+2022-07-20 13:38:17,989 - utils - INFO - Epoch: 8, Step: 24500, Loss: 5.780664, lr: 0.025000, acc: 95.093544, ppl: 1.002736
+2022-07-20 13:38:53,603 - utils - INFO - Epoch: 8, Step: 24550, Loss: 6.398707, lr: 0.025000, acc: 95.342029, ppl: 1.002579
+2022-07-20 13:39:29,197 - utils - INFO - Epoch: 8, Step: 24600, Loss: 6.008615, lr: 0.025000, acc: 95.025090, ppl: 1.002759
+2022-07-20 13:40:04,749 - utils - INFO - Epoch: 8, Step: 24650, Loss: 7.761708, lr: 0.025000, acc: 95.291841, ppl: 1.002615
+2022-07-20 13:40:40,372 - utils - INFO - Epoch: 8, Step: 24700, Loss: 6.451754, lr: 0.025000, acc: 95.091962, ppl: 1.002694
+2022-07-20 13:41:15,943 - utils - INFO - Epoch: 8, Step: 24750, Loss: 8.957330, lr: 0.025000, acc: 95.141577, ppl: 1.002717
+2022-07-20 13:41:51,559 - utils - INFO - Epoch: 8, Step: 24800, Loss: 7.761628, lr: 0.025000, acc: 95.031487, ppl: 1.002743
+2022-07-20 13:42:27,170 - utils - INFO - Epoch: 8, Step: 24850, Loss: 5.045676, lr: 0.025000, acc: 95.024913, ppl: 1.002714
+2022-07-20 13:43:03,395 - utils - INFO - Epoch: 9, Step: 24900, Loss: 6.419108, lr: 0.025000, acc: 95.355953, ppl: 1.002496
+2022-07-20 13:43:39,010 - utils - INFO - Epoch: 9, Step: 24950, Loss: 6.153134, lr: 0.025000, acc: 95.640717, ppl: 1.002401
+2022-07-20 13:44:14,595 - utils - INFO - Epoch: 9, Step: 25000, Loss: 4.371167, lr: 0.025000, acc: 95.766981, ppl: 1.002316
+2022-07-20 13:44:50,187 - utils - INFO - Epoch: 9, Step: 25050, Loss: 4.732038, lr: 0.025000, acc: 95.870399, ppl: 1.002288
+2022-07-20 13:45:25,848 - utils - INFO - Epoch: 9, Step: 25100, Loss: 6.499608, lr: 0.025000, acc: 95.692937, ppl: 1.002375
+2022-07-20 13:46:01,455 - utils - INFO - Epoch: 9, Step: 25150, Loss: 4.639710, lr: 0.025000, acc: 95.828678, ppl: 1.002233
+2022-07-20 13:46:37,032 - utils - INFO - Epoch: 9, Step: 25200, Loss: 6.185546, lr: 0.025000, acc: 95.855400, ppl: 1.002261
+2022-07-20 13:47:12,688 - utils - INFO - Epoch: 9, Step: 25250, Loss: 6.446003, lr: 0.025000, acc: 95.860158, ppl: 1.002256
+2022-07-20 13:47:48,289 - utils - INFO - Epoch: 9, Step: 25300, Loss: 5.303591, lr: 0.025000, acc: 95.417328, ppl: 1.002503
+2022-07-20 13:48:23,799 - utils - INFO - Epoch: 9, Step: 25350, Loss: 4.485854, lr: 0.025000, acc: 95.672395, ppl: 1.002374
+2022-07-20 13:48:59,534 - utils - INFO - Epoch: 9, Step: 25400, Loss: 4.747697, lr: 0.025000, acc: 95.701063, ppl: 1.002336
+2022-07-20 13:49:35,193 - utils - INFO - Epoch: 9, Step: 25450, Loss: 4.946183, lr: 0.025000, acc: 95.781499, ppl: 1.002298
+2022-07-20 13:50:10,747 - utils - INFO - Epoch: 9, Step: 25500, Loss: 7.242162, lr: 0.025000, acc: 95.853970, ppl: 1.002283
+2022-07-20 13:50:46,288 - utils - INFO - Epoch: 9, Step: 25550, Loss: 4.704483, lr: 0.025000, acc: 95.563475, ppl: 1.002450
+2022-07-20 13:51:21,818 - utils - INFO - Epoch: 9, Step: 25600, Loss: 5.492001, lr: 0.025000, acc: 95.754429, ppl: 1.002333
+2022-07-20 13:51:57,287 - utils - INFO - Epoch: 9, Step: 25650, Loss: 5.762112, lr: 0.025000, acc: 95.742962, ppl: 1.002314
+2022-07-20 13:52:32,954 - utils - INFO - Epoch: 9, Step: 25700, Loss: 6.885744, lr: 0.025000, acc: 95.841669, ppl: 1.002282
+2022-07-20 13:53:08,544 - utils - INFO - Epoch: 9, Step: 25750, Loss: 5.104865, lr: 0.025000, acc: 95.613318, ppl: 1.002426
+2022-07-20 13:53:44,162 - utils - INFO - Epoch: 9, Step: 25800, Loss: 4.194442, lr: 0.025000, acc: 95.743044, ppl: 1.002358
+2022-07-20 13:54:19,730 - utils - INFO - Epoch: 9, Step: 25850, Loss: 4.524489, lr: 0.025000, acc: 95.780401, ppl: 1.002333
+2022-07-20 13:54:55,433 - utils - INFO - Epoch: 9, Step: 25900, Loss: 3.737975, lr: 0.025000, acc: 95.675698, ppl: 1.002362
+2022-07-20 13:55:31,061 - utils - INFO - Epoch: 9, Step: 25950, Loss: 4.712805, lr: 0.025000, acc: 95.746077, ppl: 1.002318
+2022-07-20 13:56:06,824 - utils - INFO - Epoch: 9, Step: 26000, Loss: 5.926917, lr: 0.025000, acc: 95.653592, ppl: 1.002365
+2022-07-20 13:56:06,930 - utils - INFO - Saving model at checkpoints/UIModel__step_26000.pth
+2022-07-20 13:56:42,691 - utils - INFO - Epoch: 9, Step: 26050, Loss: 4.208016, lr: 0.025000, acc: 95.619936, ppl: 1.002399
+2022-07-20 13:57:18,197 - utils - INFO - Epoch: 9, Step: 26100, Loss: 5.473493, lr: 0.025000, acc: 95.717732, ppl: 1.002330
+2022-07-20 13:57:53,736 - utils - INFO - Epoch: 9, Step: 26150, Loss: 5.869132, lr: 0.025000, acc: 95.754158, ppl: 1.002328
+2022-07-20 13:58:29,401 - utils - INFO - Epoch: 9, Step: 26200, Loss: 6.257886, lr: 0.025000, acc: 95.396799, ppl: 1.002501
+2022-07-20 13:59:05,231 - utils - INFO - Epoch: 9, Step: 26250, Loss: 4.159462, lr: 0.025000, acc: 95.768925, ppl: 1.002313
+2022-07-20 13:59:40,952 - utils - INFO - Epoch: 9, Step: 26300, Loss: 4.304659, lr: 0.025000, acc: 95.649767, ppl: 1.002381
+2022-07-20 14:00:16,434 - utils - INFO - Epoch: 9, Step: 26350, Loss: 4.460094, lr: 0.025000, acc: 95.712485, ppl: 1.002377
+2022-07-20 14:00:52,040 - utils - INFO - Epoch: 9, Step: 26400, Loss: 5.198823, lr: 0.025000, acc: 95.628112, ppl: 1.002376
+2022-07-20 14:01:27,560 - utils - INFO - Epoch: 9, Step: 26450, Loss: 6.700609, lr: 0.025000, acc: 95.811305, ppl: 1.002292
+2022-07-20 14:02:03,185 - utils - INFO - Epoch: 9, Step: 26500, Loss: 4.427867, lr: 0.025000, acc: 95.773784, ppl: 1.002300
+2022-07-20 14:02:38,734 - utils - INFO - Epoch: 9, Step: 26550, Loss: 7.740872, lr: 0.025000, acc: 95.741826, ppl: 1.002308
+2022-07-20 14:03:14,531 - utils - INFO - Epoch: 9, Step: 26600, Loss: 5.467124, lr: 0.025000, acc: 95.594274, ppl: 1.002409
+2022-07-20 14:03:50,048 - utils - INFO - Epoch: 9, Step: 26650, Loss: 6.777767, lr: 0.025000, acc: 95.651449, ppl: 1.002363
+2022-07-20 14:04:25,603 - utils - INFO - Epoch: 9, Step: 26700, Loss: 7.221569, lr: 0.025000, acc: 95.658873, ppl: 1.002385
+2022-07-20 14:05:01,234 - utils - INFO - Epoch: 9, Step: 26750, Loss: 5.604421, lr: 0.025000, acc: 95.585641, ppl: 1.002430
+2022-07-20 14:05:36,792 - utils - INFO - Epoch: 9, Step: 26800, Loss: 6.460135, lr: 0.025000, acc: 95.708610, ppl: 1.002321
+2022-07-20 14:06:12,206 - utils - INFO - Epoch: 9, Step: 26850, Loss: 7.309025, lr: 0.025000, acc: 95.476076, ppl: 1.002502
+2022-07-20 14:06:47,866 - utils - INFO - Epoch: 9, Step: 26900, Loss: 5.621610, lr: 0.025000, acc: 95.694095, ppl: 1.002373
+2022-07-20 14:07:23,352 - utils - INFO - Epoch: 9, Step: 26950, Loss: 4.806009, lr: 0.025000, acc: 95.695469, ppl: 1.002349
+2022-07-20 14:07:58,891 - utils - INFO - Epoch: 9, Step: 27000, Loss: 5.183457, lr: 0.025000, acc: 95.586200, ppl: 1.002399
+2022-07-20 14:08:34,593 - utils - INFO - Epoch: 9, Step: 27050, Loss: 6.662159, lr: 0.025000, acc: 95.946908, ppl: 1.002230
+2022-07-20 14:09:10,092 - utils - INFO - Epoch: 9, Step: 27100, Loss: 6.219481, lr: 0.025000, acc: 95.668390, ppl: 1.002342
+2022-07-20 14:09:45,831 - utils - INFO - Epoch: 9, Step: 27150, Loss: 7.739329, lr: 0.025000, acc: 95.644649, ppl: 1.002374
+2022-07-20 14:10:21,513 - utils - INFO - Epoch: 9, Step: 27200, Loss: 4.558323, lr: 0.025000, acc: 95.654600, ppl: 1.002404
+2022-07-20 14:10:57,187 - utils - INFO - Epoch: 9, Step: 27250, Loss: 5.649628, lr: 0.025000, acc: 95.746843, ppl: 1.002330
+2022-07-20 14:11:32,816 - utils - INFO - Epoch: 9, Step: 27300, Loss: 5.081437, lr: 0.025000, acc: 95.675018, ppl: 1.002364
+2022-07-20 14:12:08,521 - utils - INFO - Epoch: 9, Step: 27350, Loss: 4.106874, lr: 0.025000, acc: 95.645010, ppl: 1.002365
+2022-07-20 14:12:44,171 - utils - INFO - Epoch: 9, Step: 27400, Loss: 5.962260, lr: 0.025000, acc: 95.587897, ppl: 1.002422
+2022-07-20 14:13:19,850 - utils - INFO - Epoch: 9, Step: 27450, Loss: 6.048764, lr: 0.025000, acc: 95.744274, ppl: 1.002316
+2022-07-20 14:13:55,487 - utils - INFO - Epoch: 9, Step: 27500, Loss: 5.718108, lr: 0.025000, acc: 95.831059, ppl: 1.002273
+2022-07-20 14:14:31,098 - utils - INFO - Epoch: 9, Step: 27550, Loss: 5.434970, lr: 0.025000, acc: 95.781580, ppl: 1.002308
+2022-07-20 14:15:06,717 - utils - INFO - Epoch: 9, Step: 27600, Loss: 4.272497, lr: 0.025000, acc: 95.839852, ppl: 1.002237

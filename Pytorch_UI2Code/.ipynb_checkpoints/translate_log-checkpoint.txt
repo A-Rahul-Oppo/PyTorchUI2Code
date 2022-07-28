@@ -1,0 +1,5 @@
+2022-07-20 14:22:53,612 - utils - INFO - Using CUDA on GPU 0
+2022-07-20 14:22:53,613 - utils - INFO - Data base dir data/processedImage
+2022-07-20 14:22:53,614 - utils - INFO - Loading vocab from data/xml_vocab.txt
+2022-07-20 14:22:53,615 - utils - INFO - Load testing data from data/validate.lst
+2022-07-20 14:22:55,260 - utils - INFO - Loading model from checkpoints/UIModel__step_26000.pth
